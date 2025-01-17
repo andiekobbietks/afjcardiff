@@ -1,0 +1,74 @@
+{
+    // Name of the development container
+    "name": "AFJCardiff Development Environment",
+
+    // Specify the base image with PHP and Apache pre-installed
+    "image": "mcr.microsoft.com/devcontainers/php:8.2-apache",
+
+    // Ports to be forwarded from the container to your local machine
+    // 8000 for the PHP development server, 3306 for MySQL
+    "forwardPorts": [8000, 3306],
+
+    // Features to be included in the container
+    "features": {
+        // MySQL feature to set up MySQL server
+        "ghcr.io/devcontainers/features/mysql:1": {
+            "version": "8.0",        // Specify the MySQL version
+            "password": "root"       // Set the MySQL root password
+        }
+    },
+
+    // Environment variables accessible within the container
+    "containerEnv": {
+        // Database connection settings
+        "DB_HOST": "localhost",            // Host for the database
+        "DB_DATABASE": "afjcardiff_db",    // Database name
+        "DB_USERNAME": "afjuser",          // Database username
+        "DB_PASSWORD": "yourpassword"       // Database password
+    },
+
+    // Customize VS Code settings and install extensions
+    "customizations": {
+        "vscode": {
+            // Helpful extensions for PHP and database development
+            "extensions": [
+                "felixfbecker.php-debug",                // PHP debugging
+                "bmewburn.vscode-intelephense-client",    // PHP language support
+                "mtxr.sqltools",                           // Database tools
+                "mtxr.sqltools-driver-mysql"               // MySQL driver for SQLTools
+            ],
+            "settings": {
+                // Path to the PHP executable for validation
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
+    },
+
+    // Commands to run after the container is created
+    "postCreateCommand": [
+        // Update package lists and install MySQL client
+        "sudo apt-get update && sudo apt-get install -y mysql-client",
+
+        // Install project dependencies using Composer
+        "composer install",
+
+        // Create the database if it doesn't exist
+        "mysql -u root -proot -e \"CREATE DATABASE IF NOT EXISTS afjcardiff_db;\"",
+
+        // Create a new MySQL user and grant privileges
+        "mysql -u root -proot -e \"CREATE USER IF NOT EXISTS 'afjuser'@'%' IDENTIFIED BY 'yourpassword'; GRANT ALL PRIVILEGES ON afjcardiff_db.* TO 'afjuser'@'%'; FLUSH PRIVILEGES;\"",
+
+        // Import the database schema if the SQL file exists
+        "if [ -f /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql ]; then mysql -u afjuser -pyourpassword afjcardiff_db < /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql; fi"
+    ],
+
+    // Commands to run each time the container starts
+    "postStartCommand": [
+        // Start the PHP built-in server on port 8000
+        "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff"
+    ],
+
+    // Specify the user to run as inside the container
+    "remoteUser": "vscode"
+}
+
