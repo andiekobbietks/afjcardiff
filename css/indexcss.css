@@ -1,0 +1,235 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+   display: flex;
+   flex-direction: column;
+   min-height: 100vh;
+}
+
+.card {
+  box-shadow: 0 4px 8px 4px rgba(  173, 5, 196 );
+  border-radius: 15px;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+  
+  .column {
+  float: left;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: black;
+  background-color: #CFAE08;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #ccc;
+  color: white;
+}
+
+.submitbuttons {
+	background-color: #CFAE08;
+	color: white;
+}
+
+.bg-rgba-silver {
+    background-color: rgba(192, 192, 192);
+	color:white;
+}
+
+.box
+{
+width:100%;
+padding:20px;
+background-color:#fff;
+border:1px solid #ccc;
+border-radius:5px;
+margin-top:25px;
+}
+
+/* Common styles for all section boxes */
+.sectionbox {
+    height: 90%;
+    padding: 1%;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 0px;
+    box-shadow: 0 4px 8px 4px rgba(255, 215, 0, 0.6);
+}
+
+/* Top section box */
+.topsectionbox {
+    width: 100%;
+}
+
+/* Middle section box */
+.middlesectionbox {
+    width: 90%;
+}
+
+/* Bottom section box */
+.bottomsectionbox {
+    width: 60%;
+    height: 70%;
+    padding: 2%;
+    border: 3px solid #ccc;
+    box-shadow: 0 4px 8px 4px rgba(192, 192, 192, 0.6);
+}
+
+/* Responsive styles for low-tier mobile devices */
+@media only screen and (max-width: 480px) {
+    .sectionbox {
+        height: 80%;
+        padding: 1%;
+    }
+
+    .topsectionbox {
+        width: 95%;
+    }
+
+    .middlesectionbox {
+        width: 95%;
+    }
+
+    .bottomsectionbox {
+        width: 80%;
+        height: 60%;
+        padding: 2%;
+    }
+}
+
+/* Responsive styles for mid-tier mobile devices */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .sectionbox {
+        height: 80%;
+        padding: 2%;
+    }
+
+    .topsectionbox {
+        width: 95%;
+    }
+
+    .middlesectionbox {
+        width: 95%;
+    }
+
+    .bottomsectionbox {
+        width: 70%;
+        height: 50%;
+        padding: 3%;
+    }
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.hero-textdark {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: rgba(192, 192, 192, 0.5);
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+}
+
+.sidenav {
+    list-style-type: none; /* Remove list-style dots */
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+color: #EDC200;
+}
+
+
+.sidenav .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
+}
+
+.active {
+background-color: #000;
+}
+
+
+#main {
+transition: margin-left .5s;
+padding: 16px;
+}
+
+ #top{  
+	   position:fixed;  
+	   bottom:50px;  
+	   right:0px;  
+	   display:none;  
+	   width:70px;
+	   height:50px;
+	   font-size:20px;
+	   background-color: #ccc;
+	   color: black;
+	} 
+		
+.footer {
+   padding: 10px;
+   font-size: 20px;
+   width: 100%;
+   background-color: rgba(192, 192, 192, 0.5);
+   color: black;
+   text-align: left;
+   flex-shrink: 0; /* Prevents footer from shrinking */
+}

@@ -1,0 +1,261 @@
+body {
+margin: 0;
+color:#000;  
+font-family:arial;  
+font-size: 20px;
+}
+
+
+
+.sidenav {
+height: 100%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: #06006B;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
+}
+
+.sidenav a {
+padding: 8px 8px 8px 32px;
+text-decoration: none;
+font-size: 25px;
+color: #f1f1f1;
+display: block;
+transition: 0.3s;
+}
+
+.sidenav a:hover {
+color: #EDC200;
+}
+
+
+.sidenav .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
+}
+
+.active {
+background-color: #000;
+}
+
+
+#main {
+transition: margin-left .5s;
+padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+.chat_message_area
+{
+position: relative;
+width: 100%;
+height: auto;
+background-color: #FFF;
+border: 1px solid #CCC;
+border-radius: 15px;
+}
+
+#group_chat_message
+{
+width: 100%;
+height: auto;
+min-height: 80px;
+overflow: auto;
+padding:6px 24px 6px 12px;
+border-radius: 15px;
+}
+
+.image_upload
+{
+position: absolute;
+top:3px;
+right:3px;
+}
+.image_upload > form > input
+{
+display: none;
+}
+
+.image_upload img
+{
+width: 24px;
+cursor: pointer;
+}
+
+.main_division
+{
+position: relative;
+width: 100%;
+height: auto;
+background-color: #FFF;
+border: 1px solid #CCC;
+border-radius: 3px;
+}
+#sub_division
+{
+width: 100%;
+height: auto;
+min-height: 80px;
+overflow: auto;
+padding:6px 24px 6px 12px;
+}
+
+#uploadFilegroup
+{
+position: relative;
+width: 100%;
+height: auto;
+background-color: #FFF;
+border: 1px solid #CCC;
+border-radius: 3px;
+}
+.image_upload
+{
+position: absolute;
+top:0px;
+right:16px;
+}
+.image_upload > form > input
+{
+display: none;
+}
+
+.image_upload img
+{
+width: 24px;
+cursor: pointer;
+}
+
+
+
+
+
+.box2
+{
+width:85%;
+padding:20px;
+background-color:#fff;
+border:3px solid #ccc;
+border-radius:5px;
+margin-top:25px;
+}
+
+.boxtext
+{
+width:100%;
+padding:20px;
+background-color:#fff;
+border:3px solid #ccc;
+border-radius:5px;
+margin-top:25px;
+}
+
+
+.box
+{
+padding:20px;
+background-color: #06006B;
+color: #fff;
+border:1px solid #ccc;
+border-radius:5px;
+margin-top:25px;
+box-sizing:border-box;
+}
+
+.list
+{
+font-size: 15px;  
+}
+
+#down{  
+position:fixed;  
+top:70px;  
+right:10px;  
+display:none;  
+width:80px;
+height:50px;
+font-size:20px;
+} 
+
+
+#top{  
+position:fixed;  
+bottom:50px;  
+right:10px;  
+display:none;  
+width:80px;
+height:50px;
+font-size:20px;
+} 
+
+
+.topnav {
+overflow: hidden;
+background-color: #F1F1F2;
+
+}
+
+.topnav a {
+float: left;
+display: block;
+color: #000;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+
+.topnav a:hover {
+background-color: #ddd;
+color: black;
+}
+
+.topnav a.active {
+background-color: #06006B;
+color: white;
+}
+
+.topnav .icon {
+display: none;
+}
+
+.footer {
+padding: 10px;
+font-size: 20px;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: #06006B;
+color: white;
+text-align: left;
+}
+
+.ui-autocomplete-row
+{
+padding:8px;
+background-color: #f4f4f4;
+border-bottom:1px solid #ccc;
+font-weight:bold;
+}
+.ui-autocomplete-row:hover
+{
+background-color: #ddd;
+}
+
+.notify
+{
+background-color: #F1F1F2;
+}
+

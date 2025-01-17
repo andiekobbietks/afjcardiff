@@ -1,0 +1,40 @@
+html {
+  box-sizing: border-box;
+}
+
+.loginbox {
+    width: 50%;
+    padding: 20px;
+    background-color: rgba(192, 192, 192, 0.5); /* Transparent silver */
+    border: 1px solid #ccc;
+	color:white;
+    border-radius: 15px;
+    margin-top: 100px;
+    box-shadow: 0 4px 8px 4px rgba(255, 255, 240);
+}
+
+.adminloginbox {
+    width: 50%;
+    padding: 20px;
+    background-color: rgba(255, 215, 0, 0.5);
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin-top: 100px;
+    box-shadow: 0 4px 8px 4px rgba(192, 192, 192);
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
