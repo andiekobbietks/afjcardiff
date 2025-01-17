@@ -59,16 +59,21 @@
         "mysql -u root -proot -e \"CREATE USER IF NOT EXISTS 'afjuser'@'%' IDENTIFIED BY 'yourpassword'; GRANT ALL PRIVILEGES ON afjcardiff_db.* TO 'afjuser'@'%'; FLUSH PRIVILEGES;\"",
 
         // Import the database schema if the SQL file exists
-        "if [ -f /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql ]; then mysql -u afjuser -pyourpassword afjcardiff_db < /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql; fi"
+        "if [ -f /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql ]; then mysql -u afjuser -pyourpassword afjcardiff_db < /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql; fi",
+
+        // Install live-server globally
+        "npm install -g live-server"
     ],
 
     // Commands to run each time the container starts
     "postStartCommand": [
         // Start the PHP built-in server on port 8000
-        "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff"
+        "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff",
+
+        // Start live-server to enable real-time updates
+        "live-server --port=8000 --host=0.0.0.0 --watch=/workspaces/afjcardiff"
     ],
 
     // Specify the user to run as inside the container
     "remoteUser": "vscode"
 }
-
