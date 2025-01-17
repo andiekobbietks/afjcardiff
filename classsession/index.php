@@ -3,15 +3,16 @@
 include('../database_connection.php');
 include('../category_details.php');
 
-$query = "SELECT DISTINCT class_id, class_title, code_basedtitle FROM classes 
-WHERE code_basedtitle = 'regular class' OR code_basedtitle = '1 to 1' OR code_basedtitle = 'Special Event'
-ORDER BY class_id DESC";
-$statement = $connect->prepare($query);
-
-$statement->execute();
-
-$result = $statement->fetchAll();
-
+try {
+    $query = "SELECT DISTINCT class_id, class_title, code_basedtitle FROM classes 
+    WHERE code_basedtitle = 'regular class' OR code_basedtitle = '1 to 1' OR code_basedtitle = 'Special Event'
+    ORDER BY class_id DESC";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 
 $message = '';
 $complete = '';

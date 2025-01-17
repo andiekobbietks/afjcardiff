@@ -145,3 +145,146 @@ I’ve documented the origins and evolution of Afro Dance in a short documentary
 
 ### The Opportunity in Wales
 Afro Dance is shaping global mainstream culture, and our mission is to bring this to Wales. There is an opportunity to harness the popularity of these dance styles and create momentum around what we offer. Although there are challenges as it’s still relatively ‘new’ here, we view this as an opportunity to invest in promoting and highlighting what we do. We’ve seen this happen in London where many of the most influential dancers have thriving businesses both offline and online. Cardiff is a multicultural city which can embrace and appreciate our African heritage.
+
+## 📚 Detailed Instructions
+
+### Setting Up the Repository
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/afjcardiff.git
+   cd afjcardiff
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Configure Environment Variables**
+   - Copy the `.env.example` file to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - Update the `.env` file with your database credentials and other configuration settings.
+
+4. **Run Database Migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Seed the Database**
+   ```bash
+   php artisan db:seed
+   ```
+
+6. **Start the Development Server**
+   ```bash
+   php -S localhost:8000 -t public
+   ```
+
+### Using the Application
+
+1. **Access the Application**
+   - Open your web browser and navigate to `http://localhost:8000`.
+
+2. **Admin Login**
+   - Use the default admin credentials to log in:
+     - **Username**: `admin`
+     - **Password**: `password`
+
+3. **Managing Classes**
+   - Navigate to the "Classes" section to manage class sessions, attendance, and schedules.
+
+4. **Content Management**
+   - Use the "Content Management" section to organize and distribute training materials.
+
+5. **Progress Monitoring**
+   - Track student progress and performance metrics in the "Progress Monitoring" section.
+
+6. **Media Library**
+   - Manage media assets in the "Media Library" section.
+
+7. **User System**
+   - Configure role-based access control in the "User System" section.
+
+8. **Analytics**
+   - View performance metrics and generate reports in the "Analytics" section.
+
+### Dependencies and Requirements
+
+- **PHP 8.2**: Ensure you have PHP 8.2 installed on your system.
+- **Composer**: Dependency management tool for PHP.
+- **MySQL/MariaDB**: Database server for storing application data.
+- **Apache Server**: Web server for serving the application.
+- **Node.js and npm**: Required for managing frontend dependencies (optional).
+
+### Testing
+
+1. **Run Unit Tests**
+   ```bash
+   php artisan test
+   ```
+
+2. **Run Integration Tests**
+   ```bash
+   php artisan test --group=integration
+   ```
+
+3. **Run Feature Tests**
+   ```bash
+   php artisan test --group=feature
+   ```
+
+### Deployment
+
+1. **Build for Production**
+   ```bash
+   npm run production
+   ```
+
+2. **Deploy to Server**
+   - Follow your preferred deployment process to upload the application to your production server.
+
+3. **Configure Environment Variables**
+   - Update the `.env` file on your production server with the appropriate configuration settings.
+
+4. **Run Database Migrations**
+   ```bash
+   php artisan migrate --force
+   ```
+
+5. **Seed the Database**
+   ```bash
+   php artisan db:seed --force
+   ```
+
+6. **Restart Server**
+   - Restart your web server to apply the changes.
+
+### Troubleshooting
+
+- **Database Connection Issues**
+  - Ensure your database credentials in the `.env` file are correct.
+  - Verify that the database server is running and accessible.
+
+- **Permission Errors**
+  - Check file and directory permissions to ensure the web server can read and write to the necessary files.
+
+- **Missing Dependencies**
+  - Run `composer install` and `npm install` to ensure all dependencies are installed.
+
+- **Configuration Errors**
+  - Double-check the configuration settings in the `.env` file for any typos or missing values.
+
+### Additional Resources
+
+- **Laravel Documentation**: [https://laravel.com/docs](https://laravel.com/docs)
+- **Composer Documentation**: [https://getcomposer.org/doc](https://getcomposer.org/doc)
+- **MySQL Documentation**: [https://dev.mysql.com/doc](https://dev.mysql.com/doc)
+- **Apache Documentation**: [https://httpd.apache.org/docs](https://httpd.apache.org/docs)
+- **Node.js Documentation**: [https://nodejs.org/en/docs](https://nodejs.org/en/docs)
+
+### Contact
+
+For any questions or support, please contact the development team at support@afjcardiff.com.
