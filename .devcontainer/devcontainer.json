@@ -1,7 +1,7 @@
 {
     "name": "AFJCardiff Development Environment",
     "image": "mcr.microsoft.com/devcontainers/php:8.2-apache",
-    "forwardPorts": [8000, 3306],
+    "forwardPorts": [8000, 3306, 8080],
     "features": {
         "ghcr.io/devcontainers/features/mysql:1": {
             "version": "8.0",
@@ -37,7 +37,7 @@
     ],
     "postStartCommand": [
         "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff &",
-        "live-server --port=8080 --host=0.0.0.0 --watch=/workspaces/afjcardiff"
+        "live-server --port=8080 --host=0.0.0.0 --watch=/workspaces/afjcardiff &"
     ],
     "remoteUser": "vscode"
 }
