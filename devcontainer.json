@@ -1,0 +1,33 @@
+{
+    "name": "AFJCardiff Development Environment",
+    "image": "mcr.microsoft.com/devcontainers/php:8.2-apache-bullseye",
+    "forwardPorts": [8000, 3306, 8080],
+    "features": {
+        "ghcr.io/devcontainers/features/mysql:1": {
+            "version": "8.0"
+        },
+        "ghcr.io/devcontainers/features/node:1": {}
+    },
+    "containerEnv": {
+        "DB_HOST": "localhost",
+        "DB_DATABASE": "afjcardiff_db",
+        "DB_USERNAME": "afjuser",
+        "DB_PASSWORD": "yourpassword"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "felixfbecker.php-debug",
+                "bmewburn.vscode-intelephense-client",
+                "mtxr.sqltools",
+                "mtxr.sqltools-driver-mysql"
+            ],
+            "settings": {
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
+    },
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y mysql-client && composer install && mysql -u root -proot -e \"CREATE DATABASE IF NOT EXISTS afjcardiff_db; CREATE USER IF NOT EXISTS 'afjuser'@'%' IDENTIFIED BY 'yourpassword'; GRANT ALL PRIVILEGES ON afjcardiff_db.* TO 'afjuser'@'%'; FLUSH PRIVILEGES;\" && if [ -f /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql ]; then mysql -u afjuser -pyourpassword afjcardiff_db < /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql; fi && npm install -g live-server",
+    "postStartCommand": "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff & live-server --port=8080 --host=0.0.0.0 --watch=/workspaces/afjcardiff &",
+    "remoteUser": "vscode"
+}
