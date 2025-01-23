@@ -1,0 +1,38 @@
+# Security Headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+# Protect Hidden Files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect Media Directories
+<FilesMatch "\.(mp4|mov|avi|wmv)$">
+    Order Allow,Deny
+    Allow from all
+    Require valid-user
+</FilesMatch>
+
+# PHP Error Handling
+php_flag display_errors Off
+php_value error_reporting E_ALL
+php_value error_log /workspace/afjcardiff/logs/php_errors.log
+
+# URL Rewriting
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+
+# Prevent Directory Listing
+Options -Indexes
+
+# Protect Config Files
+<FilesMatch "^(.env|composer.json|composer.lock|package.json|package-lock.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
