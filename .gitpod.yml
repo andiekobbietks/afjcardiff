@@ -1,0 +1,27 @@
+image:
+  file: .devcontainer/Dockerfile
+
+ports:
+  - port: 8000
+    onOpen: open-preview
+  - port: 3306
+    onOpen: ignore
+  - port: 8080
+    onOpen: ignore
+
+tasks:
+  - init: |
+      composer install
+      mysql -u root -e "CREATE DATABASE IF NOT EXISTS afjcardiff_db;"
+      if [ -f SQLDatabase/paradigmshift.sql ]; then 
+        mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql
+      fi
+    command: |
+      php -S 0.0.0.0:8000
+
+vscode:
+  extensions:
+    - felixfbecker.php-debug
+    - bmewburn.vscode-intelephense-client
+    - mtxr.sqltools
+    - mtxr.sqltools-driver-mysql
