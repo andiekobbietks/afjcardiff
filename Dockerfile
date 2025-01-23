@@ -1,42 +1,28 @@
-FROM php:8.2-apache
+FROM gitpod/workspace-full
 
-# Install system dependencies
+# Install core web development essentials
 RUN apt-get update && apt-get install -y \
     default-mysql-client \
+    git \
     unzip \
-    && docker-php-ext-install pdo_mysql \
-    && rm -rf /var/lib/apt/lists/*
+    curl
 
-# Install Composer
+# Install PHP extensions for MySQL connectivity
+RUN docker-php-ext-install pdo_mysql
+
+# Install Composer for PHP dependencies
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Enable Apache mod_rewrite
+# Enable Apache mod_rewrite for URL rewriting
 RUN a2enmod rewrite
 
-# Install phpMyAdmin manually from official source
-RUN curl -O https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz \
-    && tar xvf phpMyAdmin-5.2.1-all-languages.tar.gz \
-    && mv phpMyAdmin-5.2.1-all-languages /var/www/html/phpmyadmin \
-    && rm phpMyAdmin-5.2.1-all-languages.tar.gz \
-    && mkdir -p /var/lib/phpmyadmin/tmp \
-    && chown -R www-data:www-data /var/lib/phpmyadmin \
-    && cp /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+# Add PHP repository and install phpMyAdmin
+RUN apt-get update && \
+    apt-get install -y ca-certificates apt-transport-https software-properties-common wget && \
+    wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+    echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list && \
+    apt-get update && \
+    apt-get install -y phpmyadmin
 
-# Set working directory
-WORKDIR /workspace/afjcardiff
-
-# Copy application files
-COPY . /workspace/afjcardiff/
-
-# Set permissions
-RUN chown -R www-data:www-data /workspace/afjcardiff \
-    && chmod -R 755 /workspace/afjcardiff
-
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Expose ports
-EXPOSE 8000 3306
-
-# Start Apache
-CMD ["apache2-foreground"]
+# Configure Apache to serve phpMyAdmin and set up ports
+RUN echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
