@@ -264,18 +264,42 @@ Afro Dance is shaping global mainstream culture, and our mission is to bring thi
 
 ### Troubleshooting
 
-- **Database Connection Issues**
-  - Ensure your database credentials in the `.env` file are correct.
-  - Verify that the database server is running and accessible.
+If you encounter issues running the project in GitPod, follow these steps:
 
-- **Permission Errors**
-  - Check file and directory permissions to ensure the web server can read and write to the necessary files.
+1. Ensure MySQL service is running:
+    ```sh
+    mysqld --datadir=/workspace/mysql &
+    ```
 
-- **Missing Dependencies**
-  - Run `composer install` and `npm install` to ensure all dependencies are installed.
+2. Verify the database exists and import the SQL:
+    ```sh
+    mysql -u root -e "SHOW DATABASES;" # Should show afjcardiff_db
+    mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql
+    ```
 
-- **Configuration Errors**
-  - Double-check the configuration settings in the `.env` file for any typos or missing values.
+3. Start the PHP development server:
+    ```sh
+    php -S 0.0.0.0:8000
+    ```
+
+4. Check if composer dependencies are installed:
+    ```sh
+    composer install
+    ```
+
+5. Confirm ports 8000 and 3306 are exposed properly in [.gitpod.yml](.gitpod.yml).
+
+6. Review error logs in VS Code's terminal for more details.
+
+If you encounter issues, you can manually run the following commands:
+
+```sh
+mysqld --datadir=/workspace/mysql &
+mysql -u root -e "SHOW DATABASES;"
+mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql
+composer install
+php -S 0.0.0.0:8000
+```
 
 ### Additional Resources
 

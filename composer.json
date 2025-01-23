@@ -1,0 +1,15 @@
+{
+    "name": "gitpod/afjcardiff",
+    "autoload": {
+        "psr-4": {
+            "Gitpod\\Afjcardiff\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andie Kobbie",
+            "email": "andiekobbietks@outlook.com"
+        }
+    ],
+    "require": {}
+}
