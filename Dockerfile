@@ -37,11 +37,16 @@ RUN apt-get update && apt-get install -y phpmyadmin
 # Configure Apache to serve phpMyAdmin
 RUN ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 
-# Copy project files
-COPY . /workspace/afjcardiff/
-
 # Set working directory
-WORKDIR /workspace/afjcardiff/
+WORKDIR /workspace/afjcardiff
+
+# Copy only necessary files to minimize build context
+COPY composer.json composer.lock /workspace/afjcardiff/
+COPY public /workspace/afjcardiff/public
+COPY src /workspace/afjcardiff/src
+COPY .env /workspace/afjcardiff/.env
+COPY SQLDatabase /workspace/afjcardiff/SQLDatabase
+COPY startup.sh /workspace/afjcardiff/startup.sh
 
 # Set permissions
 RUN chown -R www-data:www-data /workspace/afjcardiff \

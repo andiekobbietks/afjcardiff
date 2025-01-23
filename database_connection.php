@@ -27,5 +27,24 @@ class DatabaseConnection {
     public function getConnection() {
         return $this->conn;
     }
+
+    public function checkForSymbolicLinks() {
+        $directory = new RecursiveDirectoryIterator(__DIR__);
+        foreach (new RecursiveIteratorIterator($directory) as $file) {
+            if (is_link($file)) {
+                echo "Symbolic link found: " . $file . "\n";
+            }
+        }
+    }
+
+    public function checkForDeepDirectories($maxDepth = 10) {
+        $directory = new RecursiveDirectoryIterator(__DIR__);
+        foreach (new RecursiveIteratorIterator($directory) as $file) {
+            $depth = substr_count($file->getPathname(), DIRECTORY_SEPARATOR);
+            if ($depth > $maxDepth) {
+                echo "Deep directory found: " . $file->getPathname() . "\n";
+            }
+        }
+    }
 }
 ?>
