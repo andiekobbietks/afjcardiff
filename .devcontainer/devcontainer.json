@@ -1,23 +1,35 @@
 {
-    "name": "AFJ Cardiff Dev Container",
+    "name": "PHP Development Environment",
     "image": "mcr.microsoft.com/vscode/devcontainers/php:0-8.2",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "xdebug.php-debug",
+                "bmewburn.vscode-intelephense-client",
+                "MehediDracula.php-namespace-resolver",
+                "neilbrayfield.php-docblocker",
+                "PKief.material-icon-theme"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
     },
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers/features/git:1": {}
     },
-    "extensions": [
-        "ms-azuretools.vscode-docker",
-        "ms-vscode.vscode-node-azure-pack",
-        "ms-vscode-remote.remote-containers"
+    "postCreateCommand": "curl -O https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz && tar xvf phpMyAdmin-5.2.1-all-languages.tar.gz && sudo mv phpMyAdmin-5.2.1-all-languages /usr/share/phpmyadmin && rm phpMyAdmin-5.2.1-all-languages.tar.gz && sudo mkdir -p /var/lib/phpmyadmin/tmp && sudo chown -R www-data:www-data /var/lib/phpmyadmin && sudo mkdir -p /etc/phpmyadmin && sudo cp /usr/share/phpmyadmin/config.sample.inc.php /usr/share/phpmyadmin/config.inc.php",
+    "postStartCommand": "sudo bash -c 'echo \"Alias /phpmyadmin /usr/share/phpmyadmin\" > /etc/apache2/conf-available/phpmyadmin.conf && echo \"<Directory /usr/share/phpmyadmin>\" >> /etc/apache2/conf-available/phpmyadmin.conf && echo \"    Options SymLinksIfOwnerMatch\" >> /etc/apache2/conf-available/phpmyadmin.conf && echo \"    DirectoryIndex index.php\" >> /etc/apache2/conf-available/phpmyadmin.conf && echo \"    Require all granted\" >> /etc/apache2/conf-available/phpmyadmin.conf && echo \"</Directory>\" >> /etc/apache2/conf-available/phpmyadmin.conf' && sudo a2enconf phpmyadmin && sudo service apache2 restart",
+    "forwardPorts": [80, 3306],
+    "remoteUser": "vscode",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+    "mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
     ],
-    "forwardPorts": [8000, 3306, 8080, 8081],
-    "postStartCommand": "live-server --port=8080 --host=0.0.0.0",
-    "postCreateCommand": [
-        "php -r \"require 'src/Validator.php'; Validator::validateProjectStructure();\"",
-        "rm -f /workspace/afjcardiff/.env",
-        "composer install"
-    ]
+    "containerEnv": {
+        "APACHE_DOCUMENT_ROOT": "/workspace/public"
+    }
 }
