@@ -16,3 +16,7 @@ tasks:
       sudo chmod -R 777 /workspace/.gitpod
       sudo chmod -R 777 /workspace/.vscode-remote
   - command: php -S 0.0.0.0:8000
+  - name: Validate Project Structure
+    command: php -r "require 'src/Validator.php'; Validator::validateProjectStructure();"
+  - name: Clean Sensitive Files
+    command: rm -f /workspace/afjcardiff/.env
