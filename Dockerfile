@@ -3,37 +3,30 @@ FROM php:8.2-apache
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     default-mysql-client \
-    curl \
-    nodejs \
-    npm \
+    unzip \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install live-server
-RUN npm install -g live-server
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install phpMyAdmin
-RUN apt-get update && apt-get install -y phpmyadmin
-
-# Configure Apache to serve phpMyAdmin
-RUN ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+# Install phpMyAdmin manually from official source
+RUN curl -O https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz \
+    && tar xvf phpMyAdmin-5.2.1-all-languages.tar.gz \
+    && mv phpMyAdmin-5.2.1-all-languages /var/www/html/phpmyadmin \
+    && rm phpMyAdmin-5.2.1-all-languages.tar.gz \
+    && mkdir -p /var/lib/phpmyadmin/tmp \
+    && chown -R www-data:www-data /var/lib/phpmyadmin \
+    && cp /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
 
 # Set working directory
 WORKDIR /workspace/afjcardiff
 
-# Copy only necessary files to minimize build context
-COPY composer.json composer.lock /workspace/afjcardiff/
-COPY public /workspace/afjcardiff/public
-COPY src /workspace/afjcardiff/src
-COPY .env /workspace/afjcardiff/.env
-COPY SQLDatabase /workspace/afjcardiff/SQLDatabase
-COPY startup.sh /workspace/afjcardiff/startup.sh
+# Copy application files
+COPY . /workspace/afjcardiff/
 
 # Set permissions
 RUN chown -R www-data:www-data /workspace/afjcardiff \
@@ -42,25 +35,8 @@ RUN chown -R www-data:www-data /workspace/afjcardiff \
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Add validation logic to check project structure before building
-RUN php -r "require 'src/Validator.php'; Validator::validateProjectStructure();"
-
-# Add caching mechanism for dependencies
-RUN --mount=type=cache,target=/root/.composer/cache composer install --no-dev --optimize-autoloader
-
-# Specify a non-root user to run the container
-RUN useradd -ms /bin/bash afjuser
-USER afjuser
-
-# Add logic to clean sensitive files
-RUN rm -f /workspace/afjcardiff/.env
-
-# Inject Gitpod environment variables during runtime
-ARG GITPOD_DB_PASSWORD
-RUN echo "DB_PASSWORD=$GITPOD_DB_PASSWORD" > /workspace/afjcardiff/.env
-
 # Expose ports
-EXPOSE 8000 8080
+EXPOSE 8000 3306
 
-# Start services
-CMD ["sh", "-c", "php -S 0.0.0.0:8000 -t /workspace/afjcardiff/"]
+# Start Apache
+CMD ["apache2-foreground"]
