@@ -1,22 +1,68 @@
+# .gitpod.yml
 image:
   file: .devcontainer/Dockerfile
 
 ports:
   - port: 8000
+    name: Web Server
+    description: Main application preview
     onOpen: open-preview
   - port: 3306
+    name: MySQL
+    description: Database server
     onOpen: ignore
   - port: 8080
+    name: Admin
+    description: Optional admin interface
     onOpen: ignore
 
 tasks:
-  - init: |
-      composer install
-  - before: |
-      sudo chmod -R 777 /workspace/.gitpod
-      sudo chmod -R 777 /workspace/.vscode-remote
-  - command: php -S 0.0.0.0:8000
-  - name: Validate Project Structure
-    command: php -r "require 'src/Validator.php'; Validator::validateProjectStructure();"
-  - name: Clean Sensitive Files
-    command: rm -f /workspace/afjcardiff/.env
+  - name: Initialize Workspace
+    init: |
+      # Set safe permissions
+      sudo chown -R gitpod:gitpod /workspace
+      sudo find /workspace -type d -exec chmod 755 {} \;
+      sudo find /workspace -type f -exec chmod 644 {} \;
+      
+      # Install dependencies
+      composer install --no-dev --optimize-autoloader
+      
+      # Generate .env if missing
+      [ -f .env ] || cp .env.example .env
+      
+    command: |
+      # Validate structure first
+      ./validate-structure.sh
+      
+      # Start services
+      sudo service mysql start
+      php -S 0.0.0.0:8000 -t public/
+
+  - name: Security Hardening
+    before: |
+      # Remove development tools
+      sudo apt-get remove -y composer npm nodejs
+      sudo rm -rf /usr/local/bin/composer
+      
+      # Clean sensitive files
+      rm -f .env
+      rm -rf .gitpod .vscode-remote
+      
+      # Lock down config
+      sudo chmod 644 /etc/mysql/my.cnf
+      sudo chmod 750 /workspace/afjcardiff/SQLDatabase
+
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker
+    - bmewburn.vscode-intelephense-client
+    - eamodio.gitlens
+
+github:
+  prebuilds:
+    enable: true
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
