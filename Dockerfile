@@ -2,25 +2,12 @@ FROM php:8.2-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    sudo \
-    default-mysql-server \
+    default-mysql-client \
     curl \
     nodejs \
     npm \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
-
-# Configure sudo
-RUN echo "gitpod ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# Configure MySQL
-RUN mkdir -p /var/run/mysqld && \
-    chown -R mysql:mysql /var/run/mysqld && \
-    mkdir -p /var/lib/mysql && \
-    chown -R mysql:mysql /var/lib/mysql
-
-# Initialize MySQL data directory
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -52,8 +39,11 @@ COPY startup.sh /workspace/afjcardiff/startup.sh
 RUN chown -R www-data:www-data /workspace/afjcardiff \
     && chmod -R 755 /workspace/afjcardiff
 
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
 # Expose ports
-EXPOSE 8000 3306 8080
+EXPOSE 8000 8080
 
 # Start services
-CMD ["sh", "-c", "service mysql start && mysqld_safe --skip-grant-tables & sleep 5 && mysql -u root -e \"CREATE DATABASE IF NOT EXISTS afjcardiff; FLUSH PRIVILEGES;\" && php -S 0.0.0.0:8000 -t /workspace/afjcardiff/"]
+CMD ["sh", "-c", "php -S 0.0.0.0:8000 -t /workspace/afjcardiff/"]

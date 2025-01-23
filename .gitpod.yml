@@ -12,11 +12,6 @@ ports:
 tasks:
   - init: |
       composer install
-      mysqld --datadir=/workspace/mysql &
-      sleep 10
-      mysql -u root -e "CREATE DATABASE IF NOT EXISTS afjcardiff_db;"
-      mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql
-      sh /workspace/afjcardiff/startup.sh
   - before: |
       sudo chmod -R 777 /workspace/.gitpod
       sudo chmod -R 777 /workspace/.vscode-remote

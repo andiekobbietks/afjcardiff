@@ -29,33 +29,6 @@ fi
 log "Installing PHP dependencies..."
 composer install
 
-# Setup MySQL directories
-log "Setting up MySQL directories..."
-mkdir -p /workspace/mysql
-mkdir -p /run/mysqld
-chown mysql:mysql /run/mysqld
-
-# Initialize MySQL if not already initialized
-if [ ! -f "/workspace/mysql/ibdata1" ]; then
-    log "Initializing MySQL..."
-    mysql_install_db --datadir=/workspace/mysql
-fi
-
-# Start MySQL
-log "Starting MySQL..."
-mysqld --datadir=/workspace/mysql &
-sleep 5
-
-# Initialize database
-log "Initializing database..."
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS ${DB_DATABASE};"
-
-# Import SQL file if exists
-if [ -f SQLDatabase/paradigmshift.sql ]; then 
-    log "Importing SQL file..."
-    mysql -u root ${DB_DATABASE} < SQLDatabase/paradigmshift.sql
-fi
-
 # Clean workspace
 log "Cleaning workspace..."
 git clean -ffdX
