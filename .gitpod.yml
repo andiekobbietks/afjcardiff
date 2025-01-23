@@ -2,18 +2,33 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - name: Setup
-    init: |
-      sudo -E /app/bob build
-
   - name: Initialize MySQL
     init: |
       docker-compose up -d
+      gp await-port 3306
       mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS paradigmshift;"
       mysql -u root -proot paradigmshift < SQLDatabase/paradigmshift.sql
 
   - name: Start Apache
     command: apachectl start
+
+  - name: Install Dependencies
+    init: |
+      composer install --no-dev
+      composer dump-autoload -o
+
+  - name: Environment Setup
+    init: |
+      cp .env.example .env
+      php artisan key:generate
+
+  - name: PHP Setup
+    init: |
+      composer install
+
+  - name: Apache
+    command: |
+      apache2ctl start
 
   - name: Apache & MySQL
     init: |

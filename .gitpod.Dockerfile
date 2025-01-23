@@ -21,10 +21,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Enable Apache mod_rewrite
 RUN sudo a2enmod rewrite
 
-# Ensure the /app/bob directory exists
-RUN mkdir -p /app/bob
-
-# Copy bob application
-COPY bob /app/bob
-
 # Add any additional configuration here if needed
