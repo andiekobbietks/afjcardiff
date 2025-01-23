@@ -1,0 +1,20 @@
+{
+  "name": "LAMP Development Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/php:8.2",
+  "runArgs": ["--init"],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "felixfbecker.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "neilbrayfield.php-docblocker"
+      ]
+    }
+  },
+  "postCreateCommand": "composer install",
+  "forwardPorts": [8000, 3306, 8081],
+  "remoteUser": "vscode"
+}

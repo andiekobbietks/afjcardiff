@@ -11,28 +11,30 @@ services:
       - "8000:8000"
       - "8080:80"
     depends_on:
-      - mysql
+      - db
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: db
       GITPOD_WORKSPACE_URL: ${GITPOD_WORKSPACE_URL}
 
-  mysql:
+  db:
     image: mysql:8.0
+    restart: always
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: afjcardiff
-    volumes:
-      - mysql-data:/var/lib/mysql
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: paradigmshift
     ports:
       - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: always
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: ""
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
 
 volumes:
-  mysql-data:
+  db_data:

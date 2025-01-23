@@ -6,6 +6,15 @@ tasks:
     init: |
       sudo -E /app/bob build
 
+  - name: Initialize MySQL
+    init: |
+      docker-compose up -d
+      mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS paradigmshift;"
+      mysql -u root -proot paradigmshift < SQLDatabase/paradigmshift.sql
+
+  - name: Start Apache
+    command: apachectl start
+
   - name: Apache & MySQL
     init: |
       mkdir -p /workspace/mysql
