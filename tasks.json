@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run PHP Server",
+            "label": "Run and Watch PHP Server",
             "type": "shell",
-            "command": "php -S 0.0.0.0:8000",
+            "command": "php -S 0.0.0.0:8000 & live-server --port=8080 --host=0.0.0.0 --watch=.",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -12,11 +12,31 @@
             "problemMatcher": []
         },
         {
-            "label": "Watch and Reload Server",
+            "label": "Run Tests",
             "type": "shell",
-            "command": "live-server --port=8080 --host=0.0.0.0 --watch=.",
+            "command": "phpunit",
             "group": {
-                "kind": "build",
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Lint PHP Code",
+            "type": "shell",
+            "command": "phpcs --standard=PSR12 src/",
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Format PHP Code",
+            "type": "shell",
+            "command": "php-cs-fixer fix src/",
+            "group": {
+                "kind": "test",
                 "isDefault": false
             },
             "problemMatcher": []

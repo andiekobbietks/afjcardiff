@@ -2,13 +2,6 @@
     "name": "AFJCardiff Development Environment",
     "image": "mcr.microsoft.com/devcontainers/php:8.2-apache-bullseye",
     "forwardPorts": [8000, 3306, 8080],
-    "features": {
-        "ghcr.io/devcontainers/features/mysql:1": {
-            "version": "8.0",
-            "password": "${localEnv:MYSQL_ROOT_PASSWORD:-root}"
-        },
-        "ghcr.io/devcontainers/features/node:1": {}
-    },
     "containerEnv": {
         "DB_HOST": "localhost",
         "DB_PORT": "3306",
@@ -25,7 +18,9 @@
                 "felixfbecker.php-debug",
                 "bmewburn.vscode-intelephense-client",
                 "mtxr.sqltools",
-                "mtxr.sqltools-driver-mysql"
+                "mtxr.sqltools-driver-mysql",
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint"
             ],
             "settings": {
                 "php.validate.executablePath": "/usr/local/bin/php"
@@ -33,11 +28,7 @@
         }
     },
     "postCreateCommand": [
-        "sudo apt-get update",
-        "sudo apt-get install -y mysql-client",
-        "wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh",
-        "chmod +x wait-for-it.sh",
-        "./wait-for-it.sh 127.0.0.1:3306 -t 60",
+        "sudo apt-get update && sudo apt-get install -y mysql-client",
         "composer install",
         "mysql -u root -h 127.0.0.1 -P 3306 -p${MYSQL_ROOT_PASSWORD} -e \"CREATE DATABASE IF NOT EXISTS ${DB_DATABASE}; CREATE USER IF NOT EXISTS '${DB_USERNAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}'; GRANT ALL PRIVILEGES ON ${DB_DATABASE}.* TO '${DB_USERNAME}'@'%'; FLUSH PRIVILEGES;\"",
         "if [ -f ${workspaceFolder}/SQLDatabase/paradigmshift.sql ]; then mysql -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} < ${workspaceFolder}/SQLDatabase/paradigmshift.sql; fi",

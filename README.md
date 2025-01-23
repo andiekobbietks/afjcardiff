@@ -312,3 +312,67 @@ php -S 0.0.0.0:8000
 ### Contact
 
 For any questions or support, please contact the development team at support@afjcardiff.com.
+
+## 📚 Using the `devcontainer.json` File
+
+The `devcontainer.json` file is used to define the development environment for the AFJCardiff project. It ensures that all necessary tools and dependencies are installed and configured correctly. Here is how to use it:
+
+### Setting Up the Development Environment
+
+1. **Open the Project in VS Code**
+   - Open Visual Studio Code and navigate to the AFJCardiff project directory.
+
+2. **Reopen in Container**
+   - Press `F1` to open the command palette and type `Remote-Containers: Reopen in Container`. This will start building the development container based on the `devcontainer.json` file.
+
+3. **Wait for the Container to Build**
+   - The container will be built and all necessary dependencies will be installed. This may take a few minutes.
+
+4. **Access the Development Environment**
+   - Once the container is built, you will have access to a fully configured development environment with all necessary tools and dependencies.
+
+### Customizing the `devcontainer.json` File
+
+The `devcontainer.json` file can be customized to fit your specific development needs. Here are some common customizations:
+
+1. **Adding Extensions**
+   - You can add additional VS Code extensions by modifying the `extensions` array in the `devcontainer.json` file. For example:
+     ```json
+     "extensions": [
+         "esbenp.prettier-vscode",
+         "dbaeumer.vscode-eslint",
+         "ms-azuretools.vscode-docker"
+     ]
+     ```
+
+2. **Setting Environment Variables**
+   - You can define environment variables by modifying the `containerEnv` object in the `devcontainer.json` file. For example:
+     ```json
+     "containerEnv": {
+         "DB_HOST": "localhost",
+         "DB_PORT": "3306",
+         "DB_DATABASE": "afjcardiff_db",
+         "DB_USERNAME": "afjuser",
+         "DB_PASSWORD": "yourpassword"
+     }
+     ```
+
+3. **Running Commands After Container Creation**
+   - You can run commands after the container is created by modifying the `postCreateCommand` array in the `devcontainer.json` file. For example:
+     ```json
+     "postCreateCommand": [
+         "composer install",
+         "mysql -u root -e \"CREATE DATABASE IF NOT EXISTS afjcardiff_db;\"",
+         "mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql"
+     ]
+     ```
+
+4. **Running Commands After Container Start**
+   - You can run commands after the container starts by modifying the `postStartCommand` array in the `devcontainer.json` file. For example:
+     ```json
+     "postStartCommand": [
+         "php -S 0.0.0.0:8000 -t public"
+     ]
+     ```
+
+By customizing the `devcontainer.json` file, you can tailor the development environment to your specific needs and ensure a consistent setup for all developers working on the project.

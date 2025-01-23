@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Install Composer if not present
 if ! command -v composer &> /dev/null; then
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
