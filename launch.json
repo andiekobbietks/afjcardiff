@@ -7,6 +7,20 @@
             "request": "launch",
             "port": 9000,
             "program": "${workspaceFolder}/index.php"
+        },
+        {
+            "name": "Launch Built-in Server",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.php",
+            "runtimeArgs": [
+                "-dxdebug.start_with_request=yes",
+                "-dxdebug.client_port=9000"
+            ],
+            "port": 8000,
+            "pathMappings": {
+                "/var/www/html": "${workspaceFolder}"
+            }
         }
     ]
 }
