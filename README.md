@@ -417,3 +417,46 @@ If you encounter issues related to file path length exceeding 255 characters dur
 
 5. **Update Build Tools**
    - Ensure you're using the latest version of your build tools (Bob/Buildkit/Docker).
+
+## Configuring the Frequency of Prebuild Execution in Gitpod Settings
+
+To configure the frequency of prebuild execution in Gitpod settings, follow these steps:
+
+1. **Open Gitpod Dashboard**
+   - Navigate to the Gitpod dashboard at [https://gitpod.io/dashboard](https://gitpod.io/dashboard).
+
+2. **Select Your Project**
+   - Select the AFJCardiff project from your list of projects.
+
+3. **Open Prebuild Settings**
+   - Click on the "Prebuilds" tab to open the prebuild settings for the project.
+
+4. **Configure Prebuild Frequency**
+   - In the prebuild settings, you can configure the frequency of prebuild execution. You can choose to run prebuilds on every push, on a schedule, or manually trigger them as needed.
+
+5. **Save Settings**
+   - Save the prebuild settings to apply the changes.
+
+## Using the Gitpod API to Trigger Prebuilds
+
+To use the Gitpod API to trigger prebuilds, follow these steps:
+
+1. **Obtain Gitpod API Token**
+   - Obtain a Gitpod API token from the Gitpod dashboard. Navigate to [https://gitpod.io/access-tokens](https://gitpod.io/access-tokens) and generate a new token.
+
+2. **Trigger Prebuild via API**
+   - Use the Gitpod API to trigger a prebuild. You can use a tool like `curl` to make the API request. Replace `YOUR_API_TOKEN` with your Gitpod API token and `YOUR_PROJECT_ID` with the ID of your project.
+     ```sh
+     curl -X POST "https://gitpod.io/api/v1/prebuilds" \
+     -H "Authorization: Bearer YOUR_API_TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{
+         "projectId": "YOUR_PROJECT_ID",
+         "branch": "main"
+     }'
+     ```
+
+3. **Verify Prebuild Trigger**
+   - Verify that the prebuild has been triggered by checking the prebuild logs in the Gitpod dashboard.
+
+By following these steps, you can configure the frequency of prebuild execution in Gitpod settings and use the Gitpod API to trigger prebuilds as needed.
