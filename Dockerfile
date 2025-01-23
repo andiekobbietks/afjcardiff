@@ -32,17 +32,17 @@ RUN npm install -g live-server
 RUN a2enmod rewrite
 
 # Copy project files
-COPY . /var/www/html/
+COPY . /workspace/afjcardiff/
 
 # Set working directory
-WORKDIR /var/www/html/
+WORKDIR /workspace/afjcardiff/
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /workspace/afjcardiff \
+    && chmod -R 755 /workspace/afjcardiff
 
 # Expose ports
 EXPOSE 8000 3306 8080
 
 # Start services
-CMD ["sh", "-c", "service mysql start && mysqld_safe --skip-grant-tables & sleep 5 && mysql -u root -e \"CREATE DATABASE IF NOT EXISTS afjcardiff; FLUSH PRIVILEGES;\" && php -S 0.0.0.0:8000 -t /var/www/html/"]
+CMD ["sh", "-c", "service mysql start && mysqld_safe --skip-grant-tables & sleep 5 && mysql -u root -e \"CREATE DATABASE IF NOT EXISTS afjcardiff; FLUSH PRIVILEGES;\" && php -S 0.0.0.0:8000 -t /workspace/afjcardiff/"]
