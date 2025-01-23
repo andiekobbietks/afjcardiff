@@ -55,6 +55,10 @@ USER afjuser
 # Add logic to clean sensitive files
 RUN rm -f /workspace/afjcardiff/.env
 
+# Inject Gitpod environment variables during runtime
+ARG GITPOD_DB_PASSWORD
+RUN echo "DB_PASSWORD=$GITPOD_DB_PASSWORD" > /workspace/afjcardiff/.env
+
 # Expose ports
 EXPOSE 8000 8080
 

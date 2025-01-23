@@ -37,6 +37,11 @@ tasks:
       # Start services
       sudo service mysql start
       php -S 0.0.0.0:8000 -t public/
+      
+      # Cleanup tasks here (AFTER prebuild)
+      sudo apt-get remove -y composer npm nodejs || true
+      sudo rm -rf /usr/local/bin/composer || true
+      rm -rf .gitpod .vscode-remote
 
   - name: Security Hardening
     before: |
@@ -45,7 +50,6 @@ tasks:
       sudo rm -rf /usr/local/bin/composer
       
       # Clean sensitive files
-      rm -f .env
       rm -rf .gitpod .vscode-remote
       
       # Lock down config
