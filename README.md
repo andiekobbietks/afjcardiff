@@ -376,3 +376,21 @@ The `devcontainer.json` file can be customized to fit your specific development 
      ```
 
 By customizing the `devcontainer.json` file, you can tailor the development environment to your specific needs and ensure a consistent setup for all developers working on the project.
+
+## Accessing phpMyAdmin
+
+To access phpMyAdmin, follow these steps:
+
+1. **Start the Development Environment**
+   - Ensure your development environment is running as described in the "Setting Up the Development Environment" section.
+
+2. **Open phpMyAdmin**
+   - Open your web browser and navigate to `http://localhost:8081/phpmyadmin`.
+
+3. **Login to phpMyAdmin**
+   - Use your MySQL credentials to log in:
+     - **Username**: `root`
+     - **Password**: `yourpassword`
+
+4. **Manage Your Database**
+   - You can now use phpMyAdmin to manage your MySQL database.

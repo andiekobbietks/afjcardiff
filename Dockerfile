@@ -31,6 +31,12 @@ RUN npm install -g live-server
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Install phpMyAdmin
+RUN apt-get update && apt-get install -y phpmyadmin
+
+# Configure Apache to serve phpMyAdmin
+RUN ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+
 # Copy project files
 COPY . /workspace/afjcardiff/
 
