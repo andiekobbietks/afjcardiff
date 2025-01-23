@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     nodejs \
     npm \
-    composer \
     && docker-php-ext-install pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,6 +21,9 @@ RUN mkdir -p /var/run/mysqld && \
 
 # Initialize MySQL data directory
 RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install live-server
 RUN npm install -g live-server
