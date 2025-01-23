@@ -1,8 +1,11 @@
-FROM gitpod/workspace-full:latest
+FROM gitpod/workspace-full
 
-# Install PHP and extensions
-RUN sudo apt-get update && sudo apt-get install -y \
-    php8.2 \
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN sudo add-apt-repository ppa:ondrej/php && \
+    sudo apt-get update && \
+    sudo apt-get install -y \
+    php8.2-fpm \
     php8.2-mysql \
     php8.2-cli \
     php8.2-curl \

@@ -16,5 +16,8 @@
   },
   "postCreateCommand": "composer install",
   "forwardPorts": [8000, 3306, 8081],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "appPort": [
+    "8000:8000"
+  ]
 }

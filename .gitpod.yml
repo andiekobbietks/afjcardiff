@@ -50,6 +50,9 @@ tasks:
       gp sync-await database
       mysql -u root afjcardiff < SQLDatabase/paradigmshift.sql
 
+  - init: composer install
+    command: php -S 0.0.0.0:8000 router.php
+
 ports:
   - port: 8080
     onOpen: open-preview
@@ -63,6 +66,8 @@ ports:
     onOpen: open-browser
     visibility: public
     name: phpMyAdmin
+  - port: 8000
+    onOpen: open-preview
 
 vscode:
   extensions:

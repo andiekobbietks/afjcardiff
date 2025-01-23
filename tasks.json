@@ -40,6 +40,11 @@
                 "isDefault": false
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Run and Watch PHP Server",
+            "type": "shell",
+            "command": "php -S 0.0.0.0:8000 -t public"
         }
     ]
 }
