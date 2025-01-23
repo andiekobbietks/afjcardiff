@@ -4,16 +4,21 @@
     "forwardPorts": [8000, 3306, 8080],
     "features": {
         "ghcr.io/devcontainers/features/mysql:1": {
-            "version": "8.0"
+            "version": "8.0",
+            "password": "${localEnv:MYSQL_ROOT_PASSWORD:-root}"
         },
         "ghcr.io/devcontainers/features/node:1": {}
     },
     "containerEnv": {
         "DB_HOST": "localhost",
+        "DB_PORT": "3306",
         "DB_DATABASE": "afjcardiff_db",
         "DB_USERNAME": "afjuser",
-        "DB_PASSWORD": "yourpassword"
+        "DB_PASSWORD": "${localEnv:DB_PASSWORD:-yourpassword}",
+        "MYSQL_ROOT_PASSWORD": "${localEnv:MYSQL_ROOT_PASSWORD:-root}"
     },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/afjcardiff,type=bind,consistency=cached",
+    "workspaceFolder": "/workspaces/afjcardiff",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -27,7 +32,20 @@
             }
         }
     },
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y mysql-client && composer install && mysql -u root -proot -e \"CREATE DATABASE IF NOT EXISTS afjcardiff_db; CREATE USER IF NOT EXISTS 'afjuser'@'%' IDENTIFIED BY 'yourpassword'; GRANT ALL PRIVILEGES ON afjcardiff_db.* TO 'afjuser'@'%'; FLUSH PRIVILEGES;\" && if [ -f /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql ]; then mysql -u afjuser -pyourpassword afjcardiff_db < /workspaces/afjcardiff/SQLDatabase/paradigmshift.sql; fi && npm install -g live-server",
-    "postStartCommand": "php -S 0.0.0.0:8000 -t /workspaces/afjcardiff & live-server --port=8080 --host=0.0.0.0 --watch=/workspaces/afjcardiff &",
+    "postCreateCommand": [
+        "sudo apt-get update",
+        "sudo apt-get install -y mysql-client",
+        "wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh",
+        "chmod +x wait-for-it.sh",
+        "./wait-for-it.sh 127.0.0.1:3306 -t 60",
+        "composer install",
+        "mysql -u root -h 127.0.0.1 -P 3306 -p${MYSQL_ROOT_PASSWORD} -e \"CREATE DATABASE IF NOT EXISTS ${DB_DATABASE}; CREATE USER IF NOT EXISTS '${DB_USERNAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}'; GRANT ALL PRIVILEGES ON ${DB_DATABASE}.* TO '${DB_USERNAME}'@'%'; FLUSH PRIVILEGES;\"",
+        "if [ -f ${workspaceFolder}/SQLDatabase/paradigmshift.sql ]; then mysql -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} < ${workspaceFolder}/SQLDatabase/paradigmshift.sql; fi",
+        "npm install -g live-server"
+    ],
+    "postStartCommand": [
+        "php -S 0.0.0.0:8000 -t ${workspaceFolder}",
+        "live-server --port=8080 --host=0.0.0.0 --watch=${workspaceFolder}/public"
+    ],
     "remoteUser": "vscode"
 }
