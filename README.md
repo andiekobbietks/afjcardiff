@@ -394,3 +394,26 @@ To access phpMyAdmin, follow these steps:
 
 4. **Manage Your Database**
    - You can now use phpMyAdmin to manage your MySQL database.
+
+## Additional Troubleshooting Steps
+
+If you encounter issues related to file path length exceeding 255 characters during the build process, follow these steps:
+
+1. **Run `gp validate` Command in Gitpod Workspace**
+   ```sh
+   gp validate
+   ```
+
+2. **Clean Workspace Using `git clean -ffdX` Command**
+   ```sh
+   git clean -ffdX
+   ```
+
+3. **Check for Symbolic Links**
+   - Ensure there are no symbolic links that might create recursive paths.
+
+4. **Verify Directory Structures**
+   - Verify there are no exceptionally deep directory structures in your project.
+
+5. **Update Build Tools**
+   - Ensure you're using the latest version of your build tools (Bob/Buildkit/Docker).

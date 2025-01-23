@@ -56,6 +56,10 @@ if [ -f SQLDatabase/paradigmshift.sql ]; then
     mysql -u root ${DB_DATABASE} < SQLDatabase/paradigmshift.sql
 fi
 
+# Clean workspace
+log "Cleaning workspace..."
+git clean -ffdX
+
 # Start PHP development server
 log "Starting PHP development server..."
 php -S 0.0.0.0:8000

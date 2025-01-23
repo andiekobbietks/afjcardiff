@@ -1,0 +1,5 @@
+.git/
+.gitpod/
+**/.git
+**/node_modules
+**/vendor

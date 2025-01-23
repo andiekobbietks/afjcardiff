@@ -30,8 +30,13 @@ RUN ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 # Set working directory
 WORKDIR /workspace/afjcardiff
 
-# Copy existing application directory contents
-COPY . /workspace/afjcardiff
+# Copy only necessary files to minimize build context
+COPY composer.json composer.lock /workspace/afjcardiff/
+COPY public /workspace/afjcardiff/public
+COPY src /workspace/afjcardiff/src
+COPY .env /workspace/afjcardiff/.env
+COPY SQLDatabase /workspace/afjcardiff/SQLDatabase
+COPY startup.sh /workspace/afjcardiff/startup.sh
 
 # Install PHP dependencies
 RUN composer install
