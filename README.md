@@ -29,6 +29,7 @@ Enterprise-grade academy management system for AFJCardiff, enabling seamless adm
 1. Click "Open in GitHub Codespaces"
 2. Wait for environment setup
 3. Access via forwarded port 8000
+4. Ensure the `devcontainer.json` file specifies a compatible Linux version: `mcr.microsoft.com/vscode/devcontainers/php:0-8.2`
 
 ### Local Development
 ```bash
@@ -182,6 +183,9 @@ Afro Dance is shaping global mainstream culture, and our mission is to bring thi
    ```bash
    php -S localhost:8000 -t public
    ```
+
+7. **Ensure Compatible Linux Version**
+   - Make sure the `devcontainer.json` file specifies a compatible Linux version: `mcr.microsoft.com/vscode/devcontainers/php:0-8.2`
 
 ### Using the Application
 

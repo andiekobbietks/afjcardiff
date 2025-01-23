@@ -4,7 +4,7 @@
         {
             "label": "Run and Watch PHP Server",
             "type": "shell",
-            "command": "php -S 0.0.0.0:8000 & live-server --port=8080 --host=0.0.0.0 --watch=.",
+            "command": "php -S 0.0.0.0:8000 -t public & live-server --port=8080 --host=0.0.0.0 --watch=.",
             "group": {
                 "kind": "build",
                 "isDefault": true
