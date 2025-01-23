@@ -10,7 +10,7 @@
             "name": "Andie Kobbie",
             "email": "andiekobbietks@outlook.com"
         }
-    },
+    ],
     "require": {
         "php": "^8.2",
         "ext-pdo_mysql": "*",
