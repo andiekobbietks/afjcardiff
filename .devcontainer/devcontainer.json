@@ -1,5 +1,6 @@
 {
     "name": "AFJ Cardiff Dev Container",
+    "image": "mcr.microsoft.com/vscode/devcontainers/php:0-8.2",
     "build": {
         "dockerfile": "Dockerfile",
         "context": ".."
@@ -16,6 +17,7 @@
     "postStartCommand": "live-server --port=8080 --host=0.0.0.0",
     "postCreateCommand": [
         "php -r \"require 'src/Validator.php'; Validator::validateProjectStructure();\"",
-        "rm -f /workspace/afjcardiff/.env"
+        "rm -f /workspace/afjcardiff/.env",
+        "composer install"
     ]
 }

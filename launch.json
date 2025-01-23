@@ -15,7 +15,8 @@
             "program": "${workspaceFolder}/index.php",
             "runtimeArgs": [
                 "-dxdebug.start_with_request=yes",
-                "-dxdebug.client_port=9000"
+                "-dxdebug.client_port=9000",
+                "-dxdebug.client_host=host.docker.internal"
             ],
             "port": 8000,
             "pathMappings": {
