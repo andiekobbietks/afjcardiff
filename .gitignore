@@ -1,1 +1,57 @@
+# Environment and Configuration
+.env
+.env.*
+!.env.example
+*.log
+.htaccess
+config.php
+
+# Dependencies
 /vendor/
+composer.phar
+/node_modules/
+
+# IDE and Editor Files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.DS_Store
+Thumbs.db
+
+# Media and Upload Directories
+/uploads/*
+!/uploads/.gitkeep
+/mediacontent/*
+!/mediacontent/.gitkeep
+/videos/*
+!/videos/.gitkeep
+/imageuploads/*
+!/imageuploads/.gitkeep
+/imagedownloads/*
+!/imagedownloads/.gitkeep
+/userimage/*
+!/userimage/.gitkeep
+
+# Cache and Temporary Files
+*.cache
+/temp/*
+/tmp/*
+*.tmp
+*.swp
+*.swo
+
+# Database
+*.sql
+*.sqlite
+/SQLDatabase/*
+!/SQLDatabase/paradigmshift.sql
+
+# Gitpod Specific
+.gitpod/.workspace-*
+.theia/
+.bash_history
+.mysql_history
+.composer/
+.config/
