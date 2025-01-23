@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./afjcardiff/logs:/var/log/apache2
+    environment:
+      - APACHE_LOG_DIR=/var/log/apache2
+    restart: unless-stopped
