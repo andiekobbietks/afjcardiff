@@ -16,4 +16,5 @@ tasks:
       sleep 10
       mysql -u root -e "CREATE DATABASE IF NOT EXISTS afjcardiff_db;"
       mysql -u root afjcardiff_db < SQLDatabase/paradigmshift.sql
+      sh /workspace/afjcardiff/startup.sh
   - command: php -S 0.0.0.0:8000
