@@ -2,6 +2,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
+  - name: Setup
+    init: |
+      sudo -E /app/bob build
+
   - name: Apache & MySQL
     init: |
       mkdir -p /workspace/mysql
