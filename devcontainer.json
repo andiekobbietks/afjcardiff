@@ -32,7 +32,8 @@
         "composer install",
         "mysql -u root -h 127.0.0.1 -P 3306 -p${MYSQL_ROOT_PASSWORD} -e \"CREATE DATABASE IF NOT EXISTS ${DB_DATABASE}; CREATE USER IF NOT EXISTS '${DB_USERNAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}'; GRANT ALL PRIVILEGES ON ${DB_DATABASE}.* TO '${DB_USERNAME}'@'%'; FLUSH PRIVILEGES;\"",
         "if [ -f ${workspaceFolder}/SQLDatabase/paradigmshift.sql ]; then mysql -u ${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} < ${workspaceFolder}/SQLDatabase/paradigmshift.sql; fi",
-        "npm install -g live-server"
+        "npm install -g live-server",
+        "sh ${workspaceFolder}/startup.sh"
     ],
     "postStartCommand": [
         "php -S 0.0.0.0:8000 -t ${workspaceFolder}",
