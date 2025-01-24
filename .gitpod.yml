@@ -81,3 +81,7 @@ vscode:
     - felixfbecker.php-debug
     - bmewburn.vscode-intelephense-client
     - xdebug.php-debug
+
+onOpen:
+  - action: open-browser
+    url: https://mambulecode.infinityfreeapp.com/afjcardiff/home
