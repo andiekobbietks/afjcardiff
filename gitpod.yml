@@ -1,0 +1,63 @@
+tasks:
+  - name: Initialize MySQL
+    init: |
+      docker-compose up -d
+      gp await-port 3306
+      mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS paradigmshift;"
+      mysql -u root -proot paradigmshift < SQLDatabase/paradigmshift.sql
+
+  - name: Start Apache
+    command: apachectl start
+
+  - name: Install Dependencies
+    init: |
+      composer install --no-dev
+      composer dump-autoload -o
+
+  - name: Environment Setup
+    init: |
+      cp .env.example .env
+      php artisan key:generate
+
+  - name: PHP Setup
+    init: |
+      composer install
+
+  - name: Apache & MySQL
+    init: |
+      mkdir -p /workspace/mysql
+      if [ ! -d "/workspace/mysql/mysql" ]; then
+        mysqld --initialize-insecure --datadir=/workspace/mysql
+      fi
+      mysqld --daemonize --datadir=/workspace/mysql
+    command: |
+      apache2ctl start
+      mysql -u root -e "CREATE DATABASE IF NOT EXISTS afjcardiff;"
+      mysql -u root -e "CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY 'password';"
+      mysql -u root -e "GRANT ALL PRIVILEGES ON afjcardiff.* TO 'user'@'localhost';"
+      gp sync-done database
+
+  - name: Project Setup
+    init: |
+      composer install
+      gp sync-await database
+      mysql -u root afjcardiff < SQLDatabase/paradigmshift.sql
+
+  - init: composer install
+    command: php -S 0.0.0.0:8000 router.php
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+    visibility: public
+    name: Web App
+  - port: 3306
+    onOpen: ignore
+    visibility: private
+    name: MySQL
+  - port: 8081
+    onOpen: open-browser
+    visibility: public
+    name: phpMyAdmin
+  - port: 8000
+    onOpen: open-preview
