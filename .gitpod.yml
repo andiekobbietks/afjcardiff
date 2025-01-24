@@ -23,10 +23,6 @@ tasks:
     init: |
       composer install
 
-  - name: Apache
-    command: |
-      apache2ctl start
-
   - name: Apache & MySQL
     init: |
       mkdir -p /workspace/mysql
@@ -47,12 +43,6 @@ tasks:
       gp sync-await database
       mysql -u root afjcardiff < SQLDatabase/paradigmshift.sql
 
-  - name: MongoDB Setup
-    init: |
-      sudo apt-get update
-      sudo apt-get install -y mongodb
-      sudo service mongodb start
-
   - init: composer install
     command: php -S 0.0.0.0:8000 router.php
 
@@ -71,10 +61,6 @@ ports:
     name: phpMyAdmin
   - port: 8000
     onOpen: open-preview
-  - port: 27017
-    onOpen: ignore
-    visibility: private
-    name: MongoDB
 
 vscode:
   extensions:

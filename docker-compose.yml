@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: .gitpod.Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - .:/workspace
     ports:
@@ -26,15 +26,6 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: root
 
 volumes:
   db_data:
