@@ -14,7 +14,7 @@
       ]
     }
   },
-  "postCreateCommand": "composer install",
+  "postCreateCommand": "composer install && curl -O https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz && tar xvf phpMyAdmin-5.2.1-all-languages.tar.gz && sudo mv phpMyAdmin-5.2.1-all-languages /usr/share/phpmyadmin && rm phpMyAdmin-5.2.1-all-languages.tar.gz && sudo mkdir -p /var/lib/phpmyadmin/tmp && sudo chown -R www-data:www-data /var/lib/phpmyadmin && sudo mkdir -p /etc/phpmyadmin && sudo cp /usr/share/phpmyadmin/config.sample.inc.php /usr/share/phpmyadmin/config.inc.php",
   "forwardPorts": [8000, 3306, 8081],
   "remoteUser": "vscode",
   "appPort": [

@@ -24,8 +24,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Enable Apache mod_rewrite
 RUN sudo a2enmod rewrite
 
-# Install MongoDB
-RUN sudo apt-get update && \
-    sudo apt-get install -y mongodb
-
 # Add any additional configuration here if needed
