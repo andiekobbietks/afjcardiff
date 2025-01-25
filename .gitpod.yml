@@ -48,26 +48,14 @@ tasks:
 
 ports:
   - port: 8080
-    onOpen: open-preview
     visibility: public
     name: Web App
   - port: 3306
-    onOpen: ignore
     visibility: private
     name: MySQL
   - port: 8081
-    onOpen: open-browser
     visibility: public
     name: phpMyAdmin
   - port: 8000
-    onOpen: open-preview
-
-vscode:
-  extensions:
-    - felixfbecker.php-debug
-    - bmewburn.vscode-intelephense-client
-    - xdebug.php-debug
-
-onOpen:
-  - action: open-browser
-    url: https://mambulecode.infinityfreeapp.com/afjcardiff/home
+    visibility: public
+    name: Web App
