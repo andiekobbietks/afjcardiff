@@ -1,0 +1,1324 @@
+Intro
+0:00
+hello guys and welcome to this comprehensive tutorial on lovable in this video I'm going to be building an
+0:05
+AI enhanced calorie tracking web app from scratch it will have authentication and open AI integration and I will even
+0:13
+deploy it live to production so anyone else can access the website and a beautiful mobile responsive UI right so
+0:19
+let's get started so the first step in building a website with lavable is the prompt okay so this is my prompts so we
+First Prompt
+0:25
+have the different pages here the landing page the dashboard and the various features within this pages and
+0:30
+then we also have the meals page where we have like an input field where the user can describe their meal and then
+0:36
+they press on analyze and then we will use gbt 40 to analyze the meal and then gbt 40 will return all of the
+0:43
+nutritional values within the meal and then the nutritional values will be added to our daily nutrition as we add
+0:49
+more meals as a user and not only should you be able to describe a meal and then analyze it you should also be able to
+0:55
+take an image of a meal and then have gb4 analyze it in the same way and then we also have the chat page where we can
+1:00
+chat with gb40 about our meals then we also have some styling guides and also this is important so we will start with
+1:07
+the UI right now and make it look beautiful and then we will integrate super base later on to add full stack
+1:12
+functionality so we don't want to add you know any features related to the database right now so this part is
+1:18
+pretty important make sure that you're explicit about the fact that you want to start off with the UI then I also explain how navigation should work so
+1:25
+I'm just going to press on Create and now lava ball is doing its thing now you don't have to have such a large prompt
+1:30
+you can actually have a way smaller initial prompt but in my case I do kind of like to give some context even though
+1:36
+the AI is not going to implement all of these things at once I still think it's good to provide the context of what
+1:41
+we're actually building and to describe the functionality that we want to see exist later on once we have developed
+1:47
+more parts of the application but to start off we just want the UI there we go and now we can see that lava ball has
+1:52
+responded with some information here so it's telling us let me help you create a beautiful AI powered calorie tracking
+1:58
+app this is an exciting project that can draw inspiration from Modern Health and Wellness app like my fitness pal and N
+2:05
+with a unique AI twist the love ball AI is always excited which is very nice and we actually got a build error which you
+2:11
+know is quite unlikely to get in the first PR but if this does happen you can just press on it and press on try to fix
+2:17
+it and then the lavable AI will most likely resolve the build error and what a build error is is that something is
+2:23
+wrong with the code which is causing it to not be able to compile okay and there we go and here we have our app so we
+2:29
+just have to press on try to fix and this looks really beautiful and here we have the the main app and here we have
+2:34
+the landing page which is exactly what I outlined so now once we have this General structure we want to integrate
+2:41
+our database and for that we're going to press the super base button up there but before we do that I actually want to give some additional context to why we
+2:47
+do things in this order so I'm going to open up exol drop which is a nice way of visualizing things so another thing that
+2:53
+you can do with prompts in lava ball is that you can take images so you can actually take images of different Des
+2:59
+signs and then you can include them in the prompt so what you could do is that you could use design your app in figma
+Overview of Backend/Web Apps (can skip)
+3:05
+and then you can just take screenshots of your figma design and include that within the lavable prompt and that way
+3:11
+you can be more precise with kind of the design that you want inside of lavable but in my case my prompt was very
+3:16
+comprehensive so I didn't do that but if you already have a design you can just take images of the design and then
+3:23
+include those in the prompts is make sure that you take multiple images such that you get multiple highr images to
+3:28
+include within the prompt and not just one image as that can actually make it harder as the the quality will be lower
+3:35
+so essentially when you're building a web application you can kind of think of it as building a building you want to
+3:40
+start off with the scaffolding the structure and then you can move on to the layers on top of that right the the
+3:45
+details the functionality so you kind of want to start off by just planning out the web app right like what type of user
+3:52
+experience do I want what do I actually want my web app to be able to do right and I already know that and I included
+3:57
+some of that in the initial prompt so I want it to be a calorie tracker and then you kind of want to create the pages so
+4:03
+that's like the first step of the scaffolding right this is like the planning board and then we have creating the pages which is the first layer of
+4:11
+scaffolding and then we have creating the database schema so we have already created the pages the pages are pretty
+4:17
+empty right we don't have any of the functionality and that is because we want to do this in a step-by-step manner
+4:22
+such that we don't come across any errors or problems so the next step is to create a database schema and you
+4:28
+don't actually need a database right you could make an app which is totally local right where all of the information is
+4:34
+just saved locally on the user's machine but that won't be as good because then we can't actually use external resources
+4:41
+that require us to have a sensitive information and in our case we want to make API calls to open Ai and because of
+4:48
+that we have to store an API key and we will store that API key inside of our back end where it will be kept safe but
+4:54
+in our case we do want to sustain data outside of the user's local machine for instance we want to use to be able to
+5:00
+log into his account from his mobile phone and then have access to all of the data that he has saved from his computer
+5:05
+and the only way to do that is to actually save that data somewhere outside of the user's computer if that
+5:11
+makes sense so we got to save it on on the cloud or the server and that is why we need a database and we also need the
+5:17
+database and the backend functionality for some other parts of our apps as well but I will get to that later so to
+5:22
+connect to the database I'm going to press on this superbase button and you do have to make a super base account
+5:27
+first so you go to superb.com and create an account uh they are one of these backend providers so they will provide
+Connecting Supabase & Adding Authentication
+5:34
+us with a database and a place where we can store data once you have created your superbase account you can create a
+5:40
+superbase organization and once you have created an organization within superbase you can create a project so I'm just
+5:46
+going to create a new project here I'm going to call it AI calerie tracker and then I'm just going to create a password
+5:51
+Here we can select servers I'm just going to stick to the server right here in Frankfort in Germany yeah it doesn't
+5:57
+really matter in my case this is just a test app but if you are uh building a real application you actually want your
+6:03
+servers to be close to the users but it's also very hard to tell where your users are going to come from uh most of
+6:09
+the time and there we go and now we can go back to lavable and we should be able to see our project right here so here we
+6:15
+have it AI CAD tracker so I'm just going to press on it and then I'm going to press connect and now La ball is telling me I'm now connecting your sub base
+6:22
+project to gather your datab Bas structure tables and security settings this may take a moment and while that's
+6:29
+loading I'm I'm going to go back to super base go over to authentication go to providers so these are the various
+6:35
+authentication providers the various ways in which we can log in to our app that we're building the email provider
+6:41
+is the default one and I'm just going to toggle this such that it gets turned off such that users don't have to verify
+6:48
+their emails each time they create an account within our application and then I'm just going to save that so that just
+6:53
+to make things easier while I'm developing so here we can see that lavable has set this up it's still loading a bit and there we go now it has
+7:00
+finished loading and now it's telling us the various things that we can now do when we have a sub based connection so
+7:06
+we can create a user accounts so we can add authentication we can store data we
+7:11
+can even make Edge functions which I will explain what they are later on so I think a good first step to do once you
+7:17
+have connected superbase is to add authentication because you want the users to be able to store information so
+7:22
+it makes sense to First add authentication and then add the ability to store information such that you can
+7:28
+actually link the information information to the user which has kind of added the information in our case the
+7:34
+information will just be a meal right like you know two eggs or maybe two blocks of tofu or something so I'm just
+7:40
+going to write add authentication what we can do as well is that we can specify
+7:46
+how the authentication should be added right like it's going to add the authentication in a totally normal way but the question is how do we want the
+7:52
+authentication flow to look like do we want a sign up page to appear when we press get started or maybe when we press
+7:59
+sign up lavable will probably automatically create some really nice flow for us so I'm just going to send
+8:05
+this but you can be more precise about this and kind of describe the functionality that you want but most
+8:10
+likely what will happen now is that when you press get started or sign up you will get to the sign up page or maybe the login page and then maybe you can
+8:17
+select another page and right now we can see that lavable has created these SQL commands or this SQL code and SQL code
+8:24
+is a way to describe your database schema programmatically right so it's the most you know common way to create a
+8:30
+database and in our case we don't have to worry about that we can just press on apply changes but it's actually fun
+8:36
+because now we will be able to see these changes within sub base so if we go over to table editor and we wait for these to
+8:44
+be applied and then maybe we press refresh we can see our tables right here so profiles and then we can see
+8:51
+different properties in this profile table we have ID we have the username the Avatar URL and we have these
+8:57
+different things and you can think of this as an Excel spreadsheet right so if I go over to a sheet. new and I open a
+9:05
+Google sheet it's very similar it's called a relational database and the reason why it's called a relational
+9:10
+database is because we will actually relate the profile tables to our meal tables such that we can link a user to
+9:19
+an actual meal right so in our case we want a user to be able to have multiple meals we can also do it the other way
+9:25
+around like a meal having multiple users but that doesn't make much sense but you can do that and that is why these types
+9:31
+of databases are so powerful because you can do all sorts of relationships within them but of course we don't really have
+9:37
+to worry about that because we have lovable and lovable will use handle all all of that stuff for us so if you
+9:42
+wanted to do a meals to user uh you know relation we could do that we have to tell loable but in our case this should
+9:49
+be good so now we get to the login page I'm going to press on sign up so that we can create an account and then I'm just
+9:54
+going to create a test account so I'm just going to do test gmail.com and then sign up and here we are inside of the
+10:00
+app so now once we have added that we can do some other stuff but before I go through that I actually want to show you
+10:06
+guys a feature so we have this feature called custom knowledge which allows you to add a knowledge or kind of context to
+10:12
+the AI and this context will always be in The Lovable ai's memory so The Lovable AI will always remember the
+Custom Knowledge
+10:19
+context that you put in here and of course the lovable AI has access to the chat history but if you chat a lot and
+10:25
+you have a very long chat history then The Lovable AI will start to forget get things at the top of the chat history so
+10:31
+if you want to sustain some information about your project then you can put it right here and in my case I might just want to put kind of the the general
+10:39
+guidelines for a project so I'm using this font and I'm using this color theme and then I always want it to be mobile
+10:44
+friendly now lavable usually makes your project mobile friendly by default and you can check that by pressing this
+10:51
+button right here and you can also go to this preview URL which is URL that you can go to and see how your app looks
+10:58
+kind of like for normal browser and then you can right click and go over to inspect and this kind of works on all
+11:04
+browsers and then you can change it like this you can actually also see the code over here and you can also see the
+11:10
+console but you don't have to worry about those things all right so I'm just going to save this custom knowledge like so and now I'm going to implement the
+11:18
+actual functionality okay so the first page I want to make is the meals page so I'm just going to write make it such
+11:25
+that we have an input field where we can Des scribe or meals and then have four
+11:33
+nutritional values that I can add to the given meal and then I'm going to list
+Implementing a Page
+11:40
+calories carbs protein and fat and then have submit meal button to the Daily
+11:48
+meals and then we also want to display these meals so I'm just going to write and then display the meals we have added
+11:57
+during the day underneath and of course save this data to the back end and then I'm just going to send that a very nice
+12:03
+prompt now we can see that lavable is writing the tables again so I'm just going to apply those changes while
+12:08
+lavable has finished loading there we go apply changes and yeah if you want to get technical you can read this and you
+12:14
+can see that we're creating the meals table now and we can see that we're kind of referencing to the user and that way
+12:20
+we get the relation going between the meal and the user now while we're waiting for this I can actually quickly
+12:26
+just explain the credit system on lavable So currently this might change over time where we have the starter plan
+12:31
+the launch plan the scale one plan and the Enterprise plan so with these plans you can kind of select one which fits
+Lovable Pricing Plans
+12:38
+you the best and they have different limits on them and the reason why we have these limits is because each time
+12:43
+you send a message allowable is actually enduring a lot of costs because of the
+12:48
+enormous amounts of computes required to run these large AI models so that is the
+12:53
+reason why we have the the pricing in the way that we have so some ways in which you can actually make sure
+12:59
+that you save upon your credits is to be very precise with your PRS it's also to kind of follow this step-by-step process
+13:06
+where you're very conscious in the sequence that you implement things right you can kind of think of it as you know
+13:13
+building a building like I said before you start off with the scaffolding the structure and and then you move on what
+13:19
+you can also do is that you can edit the code manually but that can be quite unintuitive but if you really want to
+13:24
+save on tokens you can do that right like for instance if it's a very small change then you can use edit the code
+13:29
+yourself like for instance if you want to edit a text and to do that you go over to edit code and then you connect
+Editing Code Manually
+13:36
+your GitHub account and then you press on transfer GitHub repo and then you can go over to your GitHub account right
+13:41
+there and also by the way we can see now that this functionality has been added if we go over to the GitHub account but
+13:48
+if we create a repo like so and then we press on edit in vs code we can open this little code editor in the Chrome
+13:54
+browser or in any sort of browser and then here we have our codebase and this is another great thing about lavall is
+14:00
+that you own your code you are in complete control over your code if you want to you can just take your code and
+14:06
+move it into any other code editor you're not stuck with lavable which I think is really great so in our case I'm
+14:11
+just going to go over to the meals page and we can find the the text so what you
+14:16
+can do is that you can just take the text and then you can search for it and then once you have found it I just press
+14:22
+command F we can just type like explanation mark and then we can go over here and then we type something in this
+14:28
+will will be our message after each update that we make inside of GitHub which is the service that we're using we
+14:34
+can write something like updated the me text and then we can just press on
+14:40
+Commit and push and then that will be reflected within lavable so we can see that we have this thing called external
+14:46
+commit which means that someone else or you you know added something to the code and then that's reflected within lavable
+14:53
+which I think is great so you can go back and forth with between GitHub and lovable all right great so now we can
+14:59
+describe our meal here so let's just say two blocks of tofu let just add some
+15:05
+values here add meal and we got this error so I'm just going to press on try to fix to see if we can resolve this
+15:11
+error now one thing that you can do when you are thinking about adding some sort of feature is that you can consult with
+15:17
+Laval before kind of implementing the feature if that makes sense before telling Laval to implement the feature
+Chat-Only Mode
+15:23
+and we actually have an experimental feature for that called chat only mode and the way that you would activate that
+15:29
+so you go over here and then to account settings and then again to account settings and then down here we have a
+15:34
+labs and then you just have to toggle this right now I actually have it toggled but yeah you move it to the right and then it's toggled and then you
+15:41
+can go back over to lavable and if I go back to my project I can uh press here
+15:47
+and I can go to shat only mode uh so that's a pretty cool thing that you can try out as well if you want to kind of
+15:52
+plan ahead of what you want to build okay so now this should work so if I now type two blocks of to and then I type in
+15:59
+the calories like so and then I add meal and there we have it perfect and now if I refresh because it should be saved on
+16:06
+the server it's still it's still there and then I can go over here and I might have to log in so let's just log in and
+16:13
+then we go over to meals and there we have it now you can actually store this meal locally as well right right now
+Building the Meals Feature
+16:19
+we're storing it on the server but you can also store it locally within your browser and then if you kind of refresh
+16:25
+and stuff it will still be saved but now because we have stored it in our database on super base we can actually
+16:30
+go on our phone and then go into you know Chrome and go into the web app and we will see you know our meal over here
+16:36
+which is fantastic and now also this is quite interesting fixed the RLS policy
+16:41
+so when a user adds a meal that's adding something to the database and then once we go into the website we're reading
+Row-Level Security Policies
+16:48
+something from the database it might be good to do some visuals right here so I actually use this for for another video but you can imagine that we have our
+16:54
+website right here with our pages and then we have our database right here each time a user on the website and it's
+17:00
+logged in we're fetching the data from the database and we don't want one user to be able to fetch another users data
+17:08
+because that's like a security issue so that is why we write a row level security rules and lavable actually does
+17:14
+this for you so lavable writes these lowlevel security rules over here within
+17:19
+these SQL codes so you can see right here set up row level security Rule and yeah you don't really have to worry
+17:25
+about them right now but it's really nice that lall also does that for you and sometimes when you get stuck in in
+17:31
+one of these update database scenarios it could have to do with a roow level security rules and in that case uh you
+17:38
+might want to try out and use prompted make sure to check the RLS rules but
+17:44
+usually lavable just catches that itself so you don't have to write that in our case that is what happened lavable
+17:50
+figured out what the issue was but in some case you might have to nudge lava ball a bit so that there is just some additional tips as well providing you
+17:57
+guys with all the sauce right now now now let's actually make it such that all of the data from our meals are displayed
+18:02
+within this page so what I'm thinking is that we can have like a circle diagram like this one like a circular progress
+18:09
+bar so I'm just going to take an image of that and copy that to my clipboard and then I'm just going to write let's
+More Building & UI Enhancements
+18:14
+add four of these four of these round progress bars make them fit the new Tre
+18:21
+AI theme so that seems to be the name of the of the web app that lava will picked
+18:26
+pretty cool and put them above the meal description let's add
+18:33
+that and hopefully it knows what I'm referring to so I want four of them uh because I have four properties right
+18:39
+there and if you ever are unsure kind of how your database looks like you can go over to super base and they actually
+18:46
+have this very you know we have this one right but they also have a very visualiz very nice visualization thing so if I go
+18:52
+over to database I believe yeah there we go and we have the schema visualization which is very nice I think I think this
+18:57
+is kind of beautiful and you can see all of the properties and stuff and this is good for getting kind of a context of
+19:03
+your web app yeah and here we have the the progress trackers so I don't actually think they look great they look
+19:09
+kind of I think they look very bad actually so I think the keyboard that I used was round the progress bars that
+19:15
+might have been a bad description so I'm just going to you know try to rely more on these images so I'm just going to take an image uh let's see here so I'm
+19:23
+going to take this image and then I'm just going to say make it look like this
+19:28
+image outline that gets filled in with orange now in some of these cases when
+19:36
+you want to use specific kind of Graphics or shorts perhaps lava wall will actually use a package for you so
+19:42
+it will automatically select a package and what a package is it's kind of like a bundle a pack of functionality that
+Using NPM Packages
+19:49
+other people have written and published openly such that other people can use it in their web apps so a lot of the times
+19:56
+people use a bunch of packag within the web apps right like it would kind of be kind of be unheard of nowadays to build
+20:03
+the web app without using external packages so many of these web applications have like hundreds of
+20:09
+external web apps but these still look kind of bad I can see okay I can see what what we're going for here but I'm
+20:15
+just going to make it do not make it be like a clock make it be like progress
+20:22
+bar with an outline I see what you are going for but I don't like it make make
+20:30
+it more like let's see if we can find a better image with like multiple here this one is perfect kind
+20:37
+of like this and then I'm just going to write you may have to use an external
+20:44
+package for this not sure I'm just going to nudge it a bit right you can see the nudging going on here so we're saying
+20:51
+you may want to use an external package so if we search up like progress bar
+20:57
+that's kind of you I and then mpm so mpm is kind of the this website right here
+21:03
+but it's it's called the no package manager but MBM is essentially the kind of thing which websites use to manage
+21:11
+packages essentially there we go so it's better to just yeah most of the times it's better to just let lavable choose
+21:17
+the package and that way we also make sure that lavable has knowledge of the package if we used tellable to use some
+21:24
+random you know package online same thing if we used tell it to use some random API on line lavable might not
+21:30
+actually have any knowledge of that API and then you would have to include that within the prompt or within the custom
+21:35
+knowledge of lavall but yeah but in my case here lav ball you selected this one and it looks perfect and it also told us
+21:43
+that it's using this package right here which looks great I think and maybe we can add tell it to add some icons as
+21:49
+well I don't know how big of a difference that it's going to make but I think it will make it look a bit more beautiful all right so here we have some
+21:55
+icons okay I think this looks really good we have some icons the protein like an egg and the calories is fire this looks really nice I think and then we
+22:02
+also have this message right here note the me.txt so the file is getting quite long 165 lines so when we're building
+22:10
+web apps we actually want to make sure that our files and our components are small and manageable you kind of want it
+22:16
+to be like you're building Lego blocks in a way and that is why we have implemented the functionality which is
+Refactoring Files
+22:23
+that lavall tells you when a file is kind of getting too large and it's highly recommended to then use allow
+22:29
+lavable to refactor it so we can see that it will actually tell that would you like me to help you with refactoring
+22:35
+it and then I'm just going to write yes you can be Factor it and that way our
+22:41
+code will be more manageable and scalable and it will be easier to add more features so I highly recommend
+22:46
+doing that and I can actually show you guys this kind of a component structure by using the select tool so the select
+22:52
+tool is a way for you to select certain parts of the web app to ask lavable about right so you can go into this part
+22:59
+and you can select it and then you can ask LEL about that part and you can be like enhance this or change that which
+The Select Tool
+23:04
+is kind of easier in certain scenarios uh where you kind of want to be precise and you don't want to have to describe
+23:11
+where the component is located and when we hover these things you can see that if I hover this div which div is kind of
+23:18
+a container we can see that it's actually hovering all of them and that's because we have one components which might be called I don't know like
+23:26
+nutritional short or something and then it's used multiple times with different values and that's a way to kind of make
+23:33
+the code more scalable right you don't want to hard code it for each of these values instead you have the data and
+23:39
+then you have the structure and then you connect the data and the structure and you map out each component and that makes it way more scalable which is very
+23:46
+nice but in our case we don't want to use the select tool right now instead we have we want to test this out so if I
+23:51
+write something like two eggs and then I add some values to this like so me we
+23:58
+can see that this gets updated uh very nice with an animation as well okay so now we want to make it such that we can
+Further Building
+24:03
+chat with our meals which is this page right here so you can see that we're kind of going Page by Page and doing this very methodically which is which I
+24:10
+think is highly recommended and helps a lot at least according to my experience so we're just going to go over to the chat page now and work on that so now
+Adding OpenAI Functionality with an Edge Function
+24:17
+I'm just going to write super nice prompt here now let's work on the chat page let's make it such that we can chat
+24:26
+with our meals that we have eaten during
+24:31
+the week we want to chat with an AI from open AI in our case we want to use GPT
+24:41
+40 and this is pretty important specify the model or it's not super important
+24:46
+but if you're going to use images you have to make sure to use an image model now lav will probably select an image
+24:51
+model automatically but it can be very good to make sure that you're using kind of a recent openi model so you can kind
+24:57
+of search up you know best open AI model and you will probably find something I just recommend using gbt 40 and this is kind of how
+25:05
+it's spelled and I'm just going to send this and we might already have some like context over here about what the AI
+25:11
+should give us it should kind of give us some a nutrition device and maybe meal planning and recipe suggestions and we
+25:18
+can tell lavable that we kind of want to prompt the AI such that it gives us these tips of course we will always be
+25:23
+able to ask the AI but it can be good to kind of prompt the AI to in buub who's
+25:28
+like a nutritional expert who's an expert in that field but yeah but here we have the chat and we can see that we
+25:34
+have to add the API key and the reason why we have to add an API key is because this is not a normal kind of function
+25:41
+that we have added now this function that we have added which calls upon open AI is actually being written inside of a
+25:48
+cloud function so if we go over to super base right here and then we go over to Edge functions they're also called Edge
+25:54
+functions you know all of these Services they call call it different things but we have this Edge function right here
+25:59
+and we don't really have to worry about this but I think it's good get some context so if we go over to our visualization right here we can see that
+26:05
+we have Edge functions and in our case we want the analyze me functionality and we also want the shat with gb40
+26:12
+functionality then we can imagine that these are two different Edge functions and the thing with Edge functions are
+26:18
+that they're ran on the edge right they're ran on the back end it's like a fancy word where describe an a backend
+26:25
+server being hosted close through user so if you have Edge functions they're kind of distributed across the world
+26:32
+such that the user has like a fast response time to the database actually Edge functions are used ways of running
+26:37
+code in the back end and they're also called endpoints and Cloud functions and the reason why we don't just want to run
+26:44
+this functionality locally like we do with all of the other stuff in our web app or not with all of the other stuff
+26:50
+but with kind of the the UI when you press around that's happening locally right the the the program and the the
+26:56
+JavaScript and the logic within our web app like most of our logic is located within the front end but the reason why
+27:02
+we want this logic to be in the back end is because we will include our API key and our API key is a way for open AI
+27:09
+servers to be able to know that the request is coming uh from me and you can
+27:15
+imagine that if other people had my openai API key then they can actually make requests on my behalf and that can
+27:21
+cost me a lot of money if they you know Ed spam requests so that is why we have this on the back end such that the only
+27:27
+way for people people to kind of interact with open a with my API key is
+27:32
+through the website so they're still you know interacting with open but it's indirectly we're using our server as a
+27:39
+proxy and that way we don't leak the API key so now we can kind of verify okay is this a paying user and that way we allow
+27:47
+the user to use my servers and use all of the the services within the web app and also for this endpoint to be
+27:54
+triggered so you can imagine that La bable might you know have something in this endpoint is the user paying L might
+28:00
+check that and if the user is paying then it will allow the quest to go through of course we haven't added any
+28:06
+payments yet but you can imagine that lavall is already testing if the user is signed up I believe lavall is and we can
+28:11
+actually double check that but either way so lavall has automatically created this Edge function for us and now we're
+28:17
+going to add the API key to the edge function so you don't just want to write the API key here that's very bad you
+28:22
+instead want to write it in the little popup which occurs such that it's inserted in the edge function and not
+28:28
+just saved on the front end right if we type it right here it's actually publicly available uh if we have a
+28:33
+public lovable account because then other people can see your project and stuff so we want to you know add it
+28:39
+right here and of course if you have a paying lovable account people won't be able to see your project if it's private
+28:45
+I believe this project is actually public so if I go over here yeah it's like public I thought I would just cover
+28:51
+this real quick so I forgot to do it in the video but when you create a project with lavable it will be public by
+28:56
+default which means that anyone can have access to your project within lavable and look at your chat history and kind
+29:02
+of your code base as well and and even remix it so if you go over here and you press on remix projects then you create
+29:08
+a copy of the project that you yourself can build upon uh you want to actually copy the super base instance so you will
+29:15
+still have the super base be connected to my superbase instance or database which means that if I like update the
+29:21
+database it won't be synced to your front end so you probably want to resync it and create your own subbase instance
+29:27
+if that makes sense or superbas database but yeah you have access to the chat history so I thought I will just make this one public uh so you guys can have
+29:33
+access to it and I will link it in the description so if you guys want to go more in detail you can you know check out which prompts I written and stuff
+29:39
+like that uh so right now I have it on public and then also for the API key I prob we just mention it so right here
+29:46
+they of course will not be exposed to the actual uh people viewing your project if anyone were to view your
+29:51
+public project because you're adding them uh in this spe special you know input field right here they will be safely stored in the back end but if you
+29:58
+if you do type them in chat then yeah if your project is public then people will be able to see those so yeah another
+30:04
+reason not to type them in in the chat other than you know not you know exposing them on the front end uh but
+30:10
+but yeah either way if you want to change it just go over here you do have to be on the starter plan to be able to create private projects uh and then you
+30:17
+also yeah so you can change it over here uh or you can change it you know once you have created the project uh to a you
+30:23
+know a private project as well I'm just going to go over to open Ai and then I'm going to type dashboard and you will
+30:29
+have to create an openi account developer account and then I'm just going to go over to API Keys create API
+30:35
+key calor app and then create secret key I'm going to copy this and then I'm just
+30:41
+going to paste it in right here press submit and then we're going to send another message to loable telling it
+30:48
+that we have submitted our API key but I believe it should work now so if I type hello we actually get an error so fail
+30:54
+to send message try again so I'm just going to tell loable at that it did not work and then lava ball I will hopefully
+31:00
+fix it but we can see here that it's actually updating the code a bit so let's just wait for it to update and let's try to write something again hello
+31:07
+let's just say we still get an error because we don't know the issue I I actually have no idea what the issue may be if you are technical you can press
+31:13
+here and you can actually see the code uh but yeah you don't really have to do that you can tell all what the issue is
+31:20
+and kind of the the thing that you want to see to to happen and sometimes you have to have a bit of grit to get it to
+31:25
+work some more advanced functionality but essentially the best method of getting things to work is to be very
+31:30
+clear with the desired functionality that you want and be very clear with what's actually occurring such that
+31:36
+lavall can help you debug so now we have a build error so it will mostly most
+31:42
+likely not work but maybe it will let's see oh there we go it seems to be working now actually I forgot about
+31:47
+telling lava ball in the prompt that we want this AI to have access to our information so I'm just going to
+31:52
+tellable that nice now it works and the reason why I tell it nice now it works works is because I want to clarify to
+32:00
+lavable that the thing that I tried to implement now works right so I'm not just doing this to be nice I'm doing
+32:05
+this such that to to confirm that what I was trying to implement now works and now we can move on so it's it's a way to
+32:12
+to kind of segment different things to move on to the next step uh to have that logical process I should I should name
+32:18
+this something but the the the kind of development you know stages if that makes sense okay either way let's now
+32:25
+make it such that the AI shat has access to all of my meals during the
+32:33
+week so include all of them in the prompt so kind of on the back end if we
+32:38
+were to kind of get an overarching overview of what is going on we have the Endo we have the chat with gbt end
+32:44
+points and then we need to retrieve all of the data from the database or not all
+32:50
+of the data but the data for the week so you can imagine that we have the two cups of tofu right here and we want La
+32:56
+ball to implement the functionality that takes these meals and include them in the prompt so you can imagine that we
+33:02
+have this prompt right here which is called you are nutritional expert or something like that and then we also you
+33:08
+want some Dynamic values in the prompts and the dynamic values are going to be the users meals which change all the
+33:15
+time this is kind of the flow you don't have to worry too much about it but you can Nodge the AI to utilize that flow if
+33:22
+it does not work so let's just type hello what have we got an error I'm going to press on try to fix and if you
+33:28
+guys want we can see here the kind of logic so we can see here that we were're getting the super base client and we're
+33:36
+getting we're kind of doing a query to get the desired data and we see that we're making some sort of I think yeah
+33:41
+some sort of filtering here but you don't have to worry about this too much
+33:46
+okay so let's try this again hello what have I eaten today okay I'm just going to take a screenshot of this and send
+33:53
+this to lavable such that lavable can see it does not have access access to my
+33:59
+meals please fix so hopefully lavable can see the the issue what you can do also if you're technical is that you can
+34:05
+go over to the to the logs right here and you can kind of see the logs for the edge functions and uh yeah what logs are
+34:13
+is yeah they're used the kind of the the data that you choose to display so you
+34:18
+can kind of debug we have the message that we're sending to opening eye here okay let's see if lavable has debug this
+34:25
+so let's wait for it to load okay and let's try this let's just copy this message to make it easier it still does
+34:31
+not work and I'm just going to be more explicit make sure that you are
+34:37
+including all of the meals for the week for the user that is logged in and
+34:46
+making the chat request in the prompt to gbt 4 right so I'm very explicit you
+34:53
+don't have to be this like detailed oriented you could probably just say it
+34:58
+does not work and just kind of say that over and over again but it can be uh
+35:03
+beneficial to be more more precise but sometimes you can't be more precise right you don't actually sometimes you
+35:09
+might not know what to say to lavable and uh and that can be can be frustrating but then you kind of just
+35:16
+have to have a grit and just you know go through it let's give it this try so hello what have I eaten today AI does
+35:23
+not know what I have eaten make sure to include it in the user message or the
+35:31
+system prompt right so when you're using these llms you can include the context
+35:37
+within the system prompt or the user message so that those like two different things of providing context to these AIS
+35:44
+so let's give this a try what have I eaten today let's see yeah and this works now okay perfect so sometimes you
+35:51
+might have to be more clear where you want to include the context the dynamic data in the prompt of course I'm doing
+35:56
+something very precise you might not be implementing like AI functionality but in our case that helped to actually
+36:02
+include the context within each user message and I know we're kind of you know in Inception right now we have an
+36:08
+AI the loable AI building another application using AI which is very you
+36:14
+know kind of confusing but it's it's very very cool that an AI can add the AI functionality within a web app but now I
+36:21
+think this is fine I think this looks good uh so let's uh move on to this functionality right here now I want to
+36:27
+go over another feature so I'm just going to do something very weird here so I'm just going to make the background
+36:33
+color green I'm just going to send that this is going to look horrible but I want to send that to display one of the
+36:39
+features that we have on lavable that I think is very cool so we have the you know select feature but then we also have the revert feature so if I used you
+The “Revert” Feature in Lovable
+36:46
+know tell lavable to do something that I didn't actually like we can just press the revert feature and that way we can
+36:52
+save upon credits then we don't have to tell Lao to revert it and this is also useful if you're like implementing a
+36:59
+feature and you're kind of struggling it can be helpful to just go back to a point in which in which you hadn't
+37:05
+actually implemented the feature and then you can try a different approach though note that when you revert your
+37:11
+database schema changes are not reverted so these SQL changes right here will not
+37:16
+be reverted and that can mess some things up and we're actually working on making it such that those are reverted
+37:22
+but here we can see now everything is green but if I press the revert button then everything will go back as it was
+37:28
+before now I want to add some AI functionality right here so I want it such that you can analyze your meal once
+37:34
+you have written the description of it and then in llm instance right a large language model an AI will analyze the
+37:40
+nutritional value of the meal right it will do some sort of estimate based on your description so I'm just going to
+GPT-4o Function Calling
+37:46
+write that functionality so now make it such that we can analyze meal by
+37:53
+pressing analyze button button or maybe estimate button which will be next to
+38:01
+the the meal button maybe you can split the meal button in half that makes sense
+More UI Improvements
+38:10
+visually okay this is not a great promp but I think it will do so we have the analyze meal button I'm just going to
+38:15
+take this image just to be super clear right so you can do this if you want to save upon tokens you can do like analyze
+38:22
+meal and then we have the meal we're going to take an image of this and now we even want to add some more things so
+38:28
+that's the UI but how do we actually want this to work we want to use CBT 40
+38:33
+for this and we also want to accept images paste in images to the input
+38:41
+field or like press on an image icon to
+38:46
+upload an image if an image is uploaded
+38:52
+then you don't have to Pro provide description if not so you can do image
+38:59
+or description or both so you can do image or description or both gbt 4
+39:04
+should pick a description for you if you only provide an image and nutritional
+39:13
+data should be automatically inserted within the input Fields if the user has
+39:22
+manually thir it and then the user can press on add me the words to add it to
+39:29
+the Daily stats I think this is good but let's also write and this is pretty important so each time you want form
+39:35
+mathod responses from open AI from gbt you want to use something called function calling and this is something
+39:41
+that essentially these llm providers kind of came up with so of course a function in programming is just like a
+39:49
+piece of functionality like it runs some code but a function calling you can
+39:54
+imagine also is just you know calling a function so in the L l space function calling is actually used getting formed
+40:00
+responses from these large language models right so if you tell laal to use open AI function calling to get
+40:09
+formatted response from gbt 40 then it we actually know what you're talking
+40:14
+about and we want to be explicit about this because we want to use function calling to get formatted responses from
+40:20
+gbt so we can kind of you know add them to our actual logs the default behaviors
+40:26
+of these LMS is to chat right so we want to be very explicit that we want to do a function call because we don't want to
+40:31
+chat with LM right now we want to get a formatted response and add that to our database so I'm just going to tell it to
+40:38
+use opena function calling to get formatted response from GPT 40 make sure
+40:43
+to include the image in the users prompt
+40:48
+and of course also the description and then I'm just going to send that and
+40:54
+that was a very long prompt but I'm just going to try that out because it can be can be good practice to write these long
+40:59
+promps and it is totally fine to do long promps and I would you know recommend it as a way to save credits but if you want
+41:06
+to implement multiple functionalities at once not on kind of describing one Function One feature but if you're
+41:12
+implementing multiple features at once it can be quite difficult to do that in use one promp and then I would recommend
+41:18
+breaking it down kind of like we with did with the different pages but now we kind of have this this one functionality
+41:24
+that I think can be done with one prompts so I'm just going to try that out so here we have the the code and we
+41:29
+can see here actually that we have the function here so if you're interested we can see that we have the function the function calling and then we have the
+41:36
+different kind of properties that we want to derive from 40 so let's give this a try let's just say like two eggs
+41:44
+I'm pretty sure two eggs have actually we want to leave this empty and then let's press on analyze meal 12 protein
+41:50
+okay and yeah I think this is correct I'm quite sure so if I if I search two eggs and then like maybe nutritional
+41:58
+value nutrition yeah it has yeah 12.7 protein according to this website so
+42:03
+it's actually pretty accurate now we can try to do an image as well so I'm just going to find an image of some tofu very
+42:10
+healthy stuff here tofu meal and I'm just going to take an image of this to I'm just going to paste in the image
+42:16
+right here so we can't actually paste in an image yet so we will have to just select it right here so there it is so
+42:22
+open and then let's analyze it we want the description also of it so yeah we
+42:28
+got a description and we got some values and meal and there we have it and it updates the screen perfect now we could
+42:34
+make it such you can just paste in the image but either way this this works fine so yeah this is perfect now we can
+42:41
+you know add images of meals and we can also add descriptions of meals and if we don't have a description and only an
+42:46
+image we will also see the description right here and we can also make the images a render on the screen let's now
+42:51
+add the dashboard so now I'm just going to write let's now add the dashboard page work so we want a short of the
+43:00
+weekly and the Daily Progress let's just check the original prom what more do we
+43:06
+want let's just add this make sure it's connected to the back end and that it
+43:12
+looks beautiful let's send that now while it's loading I'm actually just going to prepare a new prompt so I want
+43:18
+to remove this navigation thing so I'm going to press on the select tool and I'm going to write remove this text
+43:24
+element and that should be fine and I'm using not going to submit it yet because I yeah I got to wait for this to load U
+43:30
+but that's like a good tip to write your prompt while it's loading and this looks absolutely beautiful wow nice this is
+43:36
+really nice so you know a prompt matters a lot if you have a nice prompt then
+43:41
+then that can really help and we see that we don't really have much data so we can't display much on this weekly
+43:47
+graph but I do like this this ch right here so I'm just going to submit that and we did get a build error but
+43:53
+sometimes these build errors are kind of fine they might not matter but I do recommend fixing them but it seems like
+44:00
+it didn't matter in our case okay this is funny so uh now we kind of made a mistake and we don't have to panic
+44:07
+because we have the revert feature but as you can tell I was just going to revert to Navar or the Navar taste but
+44:13
+we remove the whole Nar just going I press on the revert feature uh lucky we have that and I can go back to the
+44:19
+previous previous thing and I'm going to be more explicit so I'm just going to take it image and I'm going to say sorry
+44:25
+we don't want to remove remove the nav bar was my bad we just
+44:32
+want to remove this text that says navigation but keep the side or as usual
+44:40
+I think what happened there is that we used the select tool but we go didn't go deep enough maybe so we might have us
+44:47
+selected the thing around the actual text elements so you have to make sure that the kind of scope of your select
+44:53
+tool is good and accurate so let's see if this works not uh there we go and now it's gone perfect so now I think this
+44:59
+actually looks really good and we can probably enhance this Landing pitch I'm just going to make make this Landing
+45:04
+pitch look really nice with the shards and stuff is make it really really good
+45:12
+I'm going to send that and we're going to enhance the landing page and then I think it's time to implement payments so
+45:18
+this is something that I wanted to do in the video Implement payments but the payment functionality is still an experimental feature so sometimes when
+45:25
+implementing payments right now you can get stuck but uh but then I would just recommend reverting and trying it again
+45:31
+uh but yeah it's just it's an experimental feature but if you want to give it a try I will show you guys how
+45:37
+to do it right now and here we have some the landing page enhan and I think this looks really nice so we have like a
+45:42
+short here and some more things to start your journey we can add even add the footer so I'm just going to write the
+45:48
+footer on the landing page perfect now we have this foot tour and this looks really nice we might want to add some
+45:54
+more things but yeah for for the sake of time I'm just not going to add anything additional and now let's add payments so
+46:00
+the next prompt I'm just going to prepare now will be now I want to add payments I want it to be recurring
+46:09
+subscription service that users have to pay for to actually access the main app
+Adding Stripe Payments
+46:18
+so users will land and get redirected to the landing page if they are not paying
+46:26
+customers and then if they press get start started they will get to the sign
+46:33
+up page if they are not signed up if they are signed up slash logged in they
+46:43
+will be taken to the stripe checkout to the stripe checkout if they are not
+46:49
+paying customers okay perfect now I have kind of described how we want the payment flow to function but I'm just
+46:55
+going to send this and then lavable with tell me the steps that I have to take to actually Implement payments so the
+47:01
+payment provider that we use at lavable and that we have this integration going the integration isn't finished we're
+47:07
+going to make it just as smooth as the super base integration like a button that you can just press on but currently
+47:13
+we just have the lavable AI tell you the steps so we see right here that it gives us steps and we can see that we have
+47:18
+already finished the first step which is setting up authentication with super base but now we have to create a stripe
+47:24
+account and set up a product and then we have to include our stripe API key within one of these buttons and then we
+47:30
+also have to create this stripe checkout Edge function but lava ball will will do
+47:36
+that for us but we will have to create this product manually within the stripe dashboard so I'm just going to go to
+47:42
+stripe and I already have a stripe account so I'm just going to log into that okay there we go now I'm logged in
+47:47
+I'm going to create a new account and I'm going to call it lovable AI calorie tracker I'm going to select United States and then I'm going to create it
+47:53
+and sometimes stripe might ask you to fill in a bunch of the company information and that can be quite
+47:59
+tedious especially if you haven't actually set up a company so you can actually most of the times just skip
+48:04
+that you can get around that if you're using test mode right so stripe will kind of let you test out stripe without
+48:11
+having to fill in a bunch of that information though you have to create an account but uh yeah that's just a random
+48:17
+tip that I have like look here it's telling me complete your profile but because we're inside of test mode uh
+48:22
+which we'll be we'll be using the test out uh if it actually works before we kind of deploy the app and use real
+48:27
+money and now I'm going to go over to product catalog and I'm going to create a product and I'm going to call it
+48:33
+standard plan and I'm going to skip creating a description and I'm going to select recurring and let's do $12 a
+48:39
+month and the period is monthly and then I'm going to press on ADD product and now the product has been created and now
+48:45
+we can go over to developers down here and we can go over to API keys and then
+48:51
+we can copy our secret key which we want to input to lovable so this is you know your sec secret key so you don't want to
+48:58
+put this key in your front end instead you want to add it right here to the edge function which lava ball will now
+49:03
+have created for us and I'm just going to add it like so and then while lava ball is loading I'm going to go back to
+49:09
+our product catalog press on the product that we used created and then press on the price of the product and then I'm
+49:15
+going to to copy the price ID up here so you want to go H Deep you don't just want to go over here you want to go into
+49:21
+the price and then copy the price ID and once you have the price ID uh we want to
+49:26
+convey that lavable such that lavable can select the correct product that we want the user to pay for if that makes
+49:34
+sense uh so the price ID is like public information it doesn't have to be uh secret or it's not secret it's supposed
+49:41
+to be on the front end but the secret API key right the stripe secret key has to be on the back end so that is where
+49:47
+you add API key so for the price I'm us going to prepare prompt uh here is the
+49:52
+price ID and then we're going to paste that in and we can also see here I kind of which Step we're on so this was the
+49:59
+old message so now we have already finished this step right here and this
+50:04
+step but we haven't added the price ID so I'm just going to add the price ID it
+50:09
+actually tells us that we should start off with the price ID uh so I actually did this part beforehand but I don't
+50:16
+think it matters that much but yeah but generally speaking you probably want to make sure that you're doing things in in
+50:22
+a logical order but in this case I don't think it matters perfect so now it says
+50:27
+subscribe now instead of get started which I believe it said before which which makes sense so now if I press on
+50:34
+subscribe now I believe we should be taken to the stripe checkout so let's try to press this button it just have to
+50:39
+load let's see there we go now we're in the stripe checkout and we do get this error right here but I think it's all right and you can tell that the
+50:45
+rendering is kind of stuck but this is completely fine and it's because we're inside of this web preview right here where if you go into the live preview
+50:52
+over here and we press subscribe then everything should actually render and the perfect perfectly it does and
+50:57
+because we're inside of test mode we can actually use the test stripe credit card so I'm going to press not cash app I'm
+51:02
+going to press credit card and then I'm just going to search this up so stripe test card and then I'm going to go to
+51:10
+the stripe documentation so each one of these like apis so you can imagine stripe is a API an external service they
+51:17
+have a documentation where you can kind of read how it works and they stripe has this test card that they have in their
+51:24
+documentation that you can use this doesn't really matter probably want something that makes sense
+51:29
+though so we have the month and then maybe the year can be 27th and then this can be random and this this can also be
+51:35
+random and we should be able to pay and proceed with checkout perfect and now we
+51:40
+get redirected into the main app perfect this is the functionality that we want and now we can also test if we go onto
+51:47
+the main app right here inside of incognito it should yes redirect us
+51:53
+perfect so that's kind of now we're trying to be Shey we're trying to access the main app from an account which
+51:58
+doesn't have a pay user and yeah and it's we're seeing the correct behavior and you know I think it helps to be
+52:05
+explicit in the beginning right you remember I prompted the AI The Lovable AI to have this functionality such that
+52:11
+you know we don't allow users which haven't paid to get access to the app and now we can see if we press on the
+52:17
+Subscribe button it will actually have be a get started button because we haven't you know logged in yet so now if
+52:22
+we create a new account test 2@gmail.com then we will not have access to the app
+52:28
+as well I think if I what was the URL me there we go we don't have access to the app so then we have to subscribe again
+52:35
+and uh but of course we can also just sign out and then log in to our original account and then we have access to the
+52:42
+dashboard perfect yeah I mean this is exactly functionality that we want that was very smooth and I think that the way
+52:49
+that you make your lovable experience smooth is that you take things step by step and you're very clear with your
+52:54
+prompts and if you come across an error that you stay composed and you try to resolve it in a methodical kind of
+53:01
+logical way and that's kind of how developers work when you're building a web app with you know actually writing
+53:07
+the code yourself you come across a bunch of errors this is why this experience is so much better because if
+53:12
+you come across an error in lovable in most of the cases you use tell lavable to try to fix it and you can try to you
+53:18
+know you of course want to be clear about the functionality that you want and the kind of the error that you're getting and what you're seeing on the
+53:24
+screen but in programming you know errors occur all the time like in programming 90% of your your time is
+53:32
+spent on debugging as you use lavable you will learn how to debug and how to kind of resolve errors more quickly and
+53:38
+quickly so you kind of become a better lovable user over time so when you're integrating stripe and when you your
+53:44
+stripe integration works you also want to add the customer portal so the customer portal will allow users to
+53:49
+update kind of their payment information and also cancel a subscription so yeah that that's very important to add now
+53:56
+they can technically cancel subscription through the email that they get when they purchase something with stripe so
+54:02
+yeah it it is still possible but you want to have this in the UI as well such that users can you know change their
+54:08
+subscription status so I'm just going to go over to here and I'm just going to write can you now make a new page called
+54:16
+account where users can manage their account and let's have the stripe
+54:25
+customer for portal be there as well so can manage their subscription unless you
+54:32
+send that and hopefully that should be added right there we could have been more explicit about that you know have
+54:38
+it in the sidebar but I think I think La bable will Le add it over there okay perfect so now we can press the account
+54:44
+button and now if you press on manage subscription uh we do get this error and error when we press on
+54:52
+manage cryption make sure that it let's do the stripe check out it seems
+54:59
+to be an error with the edge function so I'm just going write it seems to be problem with with the edge function so
+55:08
+I'm just going to send that all right so let's just try this again Manor subscription okay and we still get the error let's press on try to fix and
+55:15
+hopefully it should work after that now this is why the the strip integration is still experimental because you come
+55:21
+across these kind of Errors which you do like in in many cases so it's telling us that we should go through stripe
+55:26
+checkout portal so you might actually want to do that beforehand yes so you might want to press on activate test
+55:33
+link so let's just press on that and then we can also just try to toggle one
+55:38
+of these things so let's just the toggle this and press save so maybe you have to refresh it inside of the stripe you know
+55:45
+the stripe page like so so then you go over to billing it seems like I believe you might be able to search the building
+55:51
+and settings and then to customer portal and maybe like change something and press on Save and maybe it should work
+55:56
+now and yeah I think it does work we we get that thing that pops up because we're inside of the the sort of ined
+56:03
+website but now if you press on manage subscription yes we get taken to the stripe portal and now we can cancel our subscription okay so I forgot to add the
+56:09
+actual customer portal within the stripe UI so you have to go over to stripe and then go to settings and then billing you
+56:15
+can also just search here billing and then building settings and then if you go over to stripe portal you can
+56:21
+activate this you can activate this custom link to test out the portal and then you need to also like make a change
+56:27
+here and press on save so it actually makes the stripe portal work so yeah you can see that lavable actually told me
+56:32
+that so it was like the error message indicates that the stripe customer portal settings haven't been configured in test mode before the portal can work
+56:40
+we need to configure the stripe customer portal settings so it's telling me kind of the steps that I took and I just
+56:46
+pressed this link right here to do that so now it works and yeah perfect now we
+56:52
+have one last thing to do before we end this video and that is to deploy the project so to actually deploy the
+56:57
+project on lavable you can go over here and then you can press deploy and that will make it such that anyone can go to
+57:03
+your website and use the product so if I just wait for this to load and then I go to the URL we have this URL right here
+Deploying to Netlify
+57:10
+called diet dialogue at lovable and yeah then anyone else can use this and we can use share this around but we might want
+57:17
+to use a custom domain so right now it's deployed but we might want to have our own domain right but let's say I went
+57:22
+over to some like domain provider and I bought a domain then I might want to set that up and in our case we haven't
+57:29
+implemented that functionality yet within lavable but we will soon to make it super smooth and easy so because
+57:34
+lavable is open and because you own your code when you use lavable you can upload your code to any other service any other
+57:41
+hosting service so in our case I'm just going to show you guys how you can do it with netlify also read this on the
+57:47
+lavable documentation so if I go over here and then I go over to docks we can actually read the lavable dos and here
+57:52
+we have a bunch of like upto-date information about lavable we're also you know trying to keep up to date with the
+57:57
+information on the YouTube channel we can go over here to the documentation and then go over to setting up a custom
+58:02
+domain and we're going to use neifi so the first step is kind of to create a netlify account so you can go over to
+58:07
+netlify create an account I've already done that and you also want to connect your lavable project to GitHub and yeah
+58:14
+you might also have to you know create a GitHub account for that so GitHub is just a way to kind of to share source
+58:19
+code between developers so it's kind of a collaborative coding platform almost
+58:24
+almost all companies use it to track the progress under source code so it's a way
+58:30
+to collaborate on projects and to save your source code so in our case we have connected the project now to my GitHub
+58:36
+account and we have access to the source code so now we can just go over to netlify actually and we can connect nfy
+58:42
+to our GitHub account so we can go over to sign up but I already have an account so I'll just get logged in and then we
+58:49
+can go over to add new sit import an existing project and then we select GitHub and then it will ask to
+58:56
+authenticate your GitHub account I've already done that and now we want to add our repo to these repos so you will
+59:03
+probably see all of your repost right here I will have to add this GitHub repository manually because I have some
+59:09
+like authentication settings that tells me to do that so I'm just going to go down here to cancel your repo and then
+59:16
+I'm just going to log into my GitHub again I got to get this authentication code there we go and then I'm going to
+59:21
+go down here to my GitHub repos and then I'm going to select this guar repo that
+59:27
+Lev B us created for me so it was called diet dialogue so I'm just going to save that and now I should be able to see
+59:34
+this inside of my netlify UI there we go diet dialogue and now we have some
+59:39
+information so netlify has already set up a lot of the stuff right here this is like our build command how we you know
+59:46
+compile our code we don't have to change any of this netlify actually knows kind of what framework we're using uh to
+59:52
+build this application so laow bable uses V which is a very fast and smooth
+59:58
+framework to build the web apps and then of course we're using subase for our back end but neifi doesn't really care
+1:00:03
+about what backend we we use in this case so I'm just going to deploy this like so and we can see that the
+1:00:09
+deployment is in progress and then to add custom domains to nfy you go over to domain management and then you can like
+1:00:16
+add your domain and then of course you would also have to purchase your domain but you can use all sorts of domains you
+1:00:21
+know Brokers for that like you can use search up how to purchase a domain kind of and then netlify also has like a
+1:00:27
+documentation so if you go to netlify custom domain and then you can go to docs you can kind of read up on how you
+1:00:34
+create your custom domain to neifi or you can just watch like a YouTube video about it like this one right here you
+1:00:40
+know I I prefer YouTube videos I like them I think they're good but but yeah most of the time you know the
+1:00:46
+documentation is better because it's always kind of up to date it seems like it has successfully been published and
+1:00:51
+this is the you know kind of default domain that netify uploaded it to and this looks great so now if we add the
+1:00:59
+the custom domain to netlify that will be reflected and then we can go to like I don't know what we would call it diet
+1:01:04
+dial.com or something I'm not sure it's kind of funny it Rhymes but yeah so if you want to do that you search up how to
+1:01:10
+buy a domain and then how to connect your domain to netlify maybe there are videos which display the whole process
+1:01:16
+and another thing like sometimes when you upload your project to netlify it might have an error in it so when you
+1:01:22
+deploy things to netlify you might get a build error so if I search up netlify like build the error you might get
+1:01:28
+something like this right where it says it failed in that case you can go over to your logs so you might be able to
+1:01:34
+upload the deploy logs and then you can copy those logs and then you can paste them into lavable so if you go back to
+1:01:40
+lavable with the logs you can say I am trying to deploy the project to
+1:01:49
+netlify here are my logs from netlify something like that and they just paste
+1:01:54
+in the logs and then LEL will most likely be able to resolve the issue sometimes these deployment issues have
+1:02:00
+to do with kind of the the preciseness of nety servers right like some of these hosting servers want everything to be
+1:02:06
+like super syntactically correct so sometimes if you're using two packages which might not actually work together
+1:02:13
+even though they're actually working together within the app netlify might run like a certain script which tells
+1:02:20
+you that they don't work together and then you you know take the logs I think you you go over here actually and then
+1:02:26
+you can see the build right here and you just copy the the logs you don't have to copy all of the logs netlify kind of has
+1:02:32
+a nice way of displaying the error so you can just copy the error logs over here and then just you know copy them go
+1:02:39
+over to your lavable project and then just paste them in right here and you just say I got this error while building
+1:02:46
+the app so that is kind of what you do and then you can just send that and then lava ball should be able to resolve it but in our case we didn't get any
+1:02:52
+deployment errors and you usually don't get any deployment errors but but one time I did and yeah I think it's just
+1:02:58
+good to so you guys have that knowledge as well I'm trying to you know provide as much context as possible but I think
+1:03:04
+I covered most of the stuff one other thing which you might want to change which I actually do recommend H changing
+1:03:10
+when you're building like a website is to change this logo right here right now it's using a lovable kind of default
+1:03:17
+assigned logo and you may want to change that to your own logo so that's called a fave icon so if you search up fave icon
+Adding Metadata & Favicons
+1:03:24
+you will see that this is the icon on websites which show up over there and then you also have some other metadata
+1:03:30
+on websites so this is called metadata it's like the data on the website that is kind of outside of the website's
+1:03:36
+context if that makes sense it's not in the website even though it's in the code of the website but it's it's displayed
+1:03:41
+outside of the the context of the website and you can actually change all of that so you can tell lavable to add a
+1:03:47
+fav icon so I can use fa icon example let's just search fa icon example and uh
+1:03:55
+we can probably used download one of these but the resolution has to be correct so I believe it's 32x 32 this
+1:04:01
+one is not either 32x 32 so what we can do actually maybe is that we just take
+1:04:06
+an image and let's just sure that it's 32x 32 this is a bit tedious uh so I'm
+1:04:11
+just going to attach this icon right here and then I'm just going to right can you make this the websites
+1:04:18
+faon and can you also So Meta data we
+1:04:24
+can call the website n three AI like you have also add some meta tags and
+1:04:33
+description and stuff so the metatags kind of help search engines rank your
+1:04:39
+website they don't matter that much it's it's more about the content of your website which matters and also what your
+1:04:44
+visitors do on the website at least that is how like the the Google algorithm works I believe but yeah it can be good
+1:04:51
+to add this kind of metadata so he going to prompt bable to do that then he's going to change file and you can
+1:04:56
+actually go into the code or we can just look at changes and we can see that it has added this metadata and you can of
+1:05:02
+course change this yourself if you want to be more you know precise about it but I'm just going to go with with lava
+1:05:08
+Ball's suggestion right here if you want to change it yourself you would have to find the file with the metadata and the
+1:05:15
+way that you can do that quite easily is just to copy this right I just press
+1:05:20
+that copy this and then I'm just going to search for it right here we might have to refresh this let's try to refh refresh this let's search for it it and
+1:05:28
+there we have it so here we have the meta file the index.html we can change these things as we would like but of
+1:05:33
+course there are certain requirements for this so you cannot you know make this enormous so that is why probably
+1:05:39
+you want to do it through lavable to make sure that it actually works that it's a valid HTML so now we can see that we have added all of this meta
+1:05:46
+information and there are some other things that you can add as well so there's something called an OG image
+1:05:51
+that you can add to a website that is like the image which shows up and the space as your website when you send it
+1:05:56
+through different social media platforms for instance like on Facebook or Discord or something like that so uh you may
+1:06:02
+want to change that as well and you can do that as well use tell lovable which image you want to use as your OG image
+1:06:08
+and lovable which change it and you can like search up OG image size just to make sure that it's like you're using
+1:06:14
+the correct format and stuff like that and now when you make a change neety actually automatically refreshes it
+1:06:19
+though it can take some time but essentially how it works is that netify is connected to GitHub right and La ball
+1:06:24
+is also connected to GitHub so when you make a change in lavable the GitHub repo updates and netfi listens to the GitHub
+1:06:30
+repo and makes a new deployment so we go over here if you refresh I think we
+1:06:36
+should yeah there we go we see a new deployment and this deployment has the changes that we just made and that way
+1:06:42
+we can see our favon right there but yeah it might take a while though for a deployment to finish maybe a couple of
+1:06:47
+minutes or so but either way that was it for this video I hope you guys enjoyed it and it was very comprehensive and we
+1:06:52
+will make more videos in the future but yeah comment below what you want to see me build and kind of we're thinking
+1:06:58
+about making like a tips and tricks video which I think will be very nice but then if you have any particular like
+Outro
+1:07:03
+kind of how to add this feature or how to integrate this API or maybe how to do that or this then comment it below and
+1:07:09
+we might make a video about it
